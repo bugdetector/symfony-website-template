@@ -1,0 +1,27 @@
+<div class="modal" data-modal="true" id="{{ modalId }}">
+	<div class="modal-content modal-center-y max-w-[600px] max-h-[95%]">
+		<div class="modal-header">
+			<h3 class="modal-title">
+				{% trans %}Add New Page{% endtrans %}
+			</h3>
+			<button type="button" class="btn btn-xs btn-icon btn-light" data-modal-dismiss="true">
+				<i class="ki-outline ki-cross"></i>
+				<span class="sr-only">{% trans %}Close{% endtrans %}</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			{{ form_start(form) }}
+			<input type="hidden" name="_token" value="{{ csrf_token('new') }}">
+			{{ form_widget(form) }}
+			<div class="flex justify-center gap-3">
+				<button type="submit" class="btn btn-success">
+					{% trans %}Create{% endtrans %}
+				</button>
+				<button data-modal-dismiss="true" type="button" class="btn btn-light">
+					{% trans %}Cancel{% endtrans %}
+				</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>

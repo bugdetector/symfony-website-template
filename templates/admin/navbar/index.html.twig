@@ -1,0 +1,12 @@
+{% extends '@base_theme/base.html.twig' %}
+
+{% block body %}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<div>
+		<button type="submit" id="form_save" class="btn btn-primary fixed bottom-5 end-5" onclick="window.scrollTo({ top: 0 })">
+			{% trans %}Save{% endtrans %}
+		</button>
+	</div>
+	{{ form_end(form) }}
+{% endblock %}

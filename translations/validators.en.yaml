@@ -148,3 +148,8 @@ Error: Error
 'Please enter your email': 'Please enter your email'
 'You should agree to our terms.': 'You should agree to our terms.'
 'There is already an account with this email': 'There is already an account with this email'
+'You must enter a valid email address': 'You must enter a valid email address'
+'This value should not be empty.': 'This value should not be empty.'
+'Please enter at least 4 characters': 'Please enter at least 4 characters'
+'Please Enter maximum 15 characters': 'Please Enter maximum 15 characters'
+'Please enter at least 15 characters': 'Please enter at least 15 characters'

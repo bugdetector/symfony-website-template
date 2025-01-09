@@ -17,7 +17,7 @@
 					</div>
 				</span>
 			</div>
-			<a href="{{ path('homepage') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+			<a href="{{ path('homepage') }}" class="sidebar-item" data-turbo="false">
 				<span class="sidebar-icon">
 					<span class="menu-icon">
 						<i class="ki-filled ki-home"></i>
@@ -67,6 +67,36 @@
 						</span>
 						<span class="tooltip">
 							{% trans %}Pages{% endtrans %}
+						</span>
+					</a>
+					<a href="{{ path('app_admin_contentType_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<span class="i-tabler-brand-tidal text-2xl"></span>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Content Types{% endtrans %}
+						</span>
+					</a>
+					<a href="{{ path('app_admin_navbar_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<span class="i-tabler-menu text-2xl"></span>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Navbar{% endtrans %}
+						</span>
+					</a>
+					<a href="{{ path('app_admin_contact_form_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<span class="i-tabler-address-book text-2xl"></span>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Contact Forms{% endtrans %}
 						</span>
 					</a>
 				{% endif %}

@@ -87,18 +87,46 @@ page.deleted_successfully: 'Page deleted successfully.'
 'You can reset your password using the link below. This link will expire in {expire}': 'You can reset your password using the link below. This link will expire in {expire}'
 'Hi {user}': 'Hi {user}'
 'Edit File: { name }': 'Edit File: { name }'
+'Content Types': 'Content Types'
+contentType.created_successfully: 'Content Type created successfully.'
+'Add New Content Type': 'Add New Content Type'
+contentType.updated_successfully: 'Content Type updated successfully.'
+'Edit Content Type {name}': 'Edit Content Type {name}'
+contentType.deleted_successfully: 'Content Type deleted successfully.'
+Slug: Slug
+'Content Type': 'Content Type'
+Create: Create
+Cancel: Cancel
 'Sorry, an unknown error occured.': 'Sorry, an unknown error occured.'
 'Back to Homepage': 'Back to Homepage'
 'Page not found': 'Page not found'
 "Sorry, we can't find the page you requested.": "Sorry, we can't find the page you requested."
 'Access Denied': 'Access Denied'
 "Sorry, you don't have access to view this page.": "Sorry, you don't have access to view this page."
+'Navbar items saved successfully.': 'Navbar items saved successfully.'
+'Navbar Items': 'Navbar Items'
+'Contact Forms': 'Contact Forms'
+'Edit Contact {name}': 'Edit Contact {name}'
+Phone: Phone
+'Contact Form': 'Contact Form'
+Navbar: Navbar
+'Cover image': 'Cover image'
+'Gallery items': 'Gallery items'
+'From url': 'From url'
+Add: Add
+Insert: Insert
+'Add new Url Redirection': 'Add new Url Redirection'
+General: General
+Settings: Settings
+'Url Redirections': 'Url Redirections'
+'Upload a PNG/JPG file.': 'Upload a PNG/JPG file.'
 'Profile updated successfully': 'Profile updated successfully'
 Profile: Profile
 Upload: Upload
 'Dark Mode': 'Dark Mode'
 Language: Language
+'Contact form saved successfully': 'Contact form saved successfully'
+'Contact form deleted successfully': 'Contact form deleted successfully'
+'Add New label': 'Add New label'
 Clear: Clear
 All: All
-'Add New label': 'Add New label'
-Add: Add

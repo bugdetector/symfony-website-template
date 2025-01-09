@@ -1,0 +1,10 @@
+<form method="post" action="{{ path('app_admin_contact_form_delete', {'id': contact_form.id}) }}">
+	<div class="fixed bottom-10 end-36 z-10">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact_form.id) }}">
+		{% set modalId = 'delete-modal-' ~ contact_form.id %}
+		<button type='button' class='btn btn-danger' data-modal-toggle="#{{ modalId }}">
+			<span class='ki-outline ki-trash text-xl'></span>
+		</button>
+	</div>
+	{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "Contact Form"|trans} %}
+</form>

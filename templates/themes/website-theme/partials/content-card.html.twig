@@ -1,0 +1,36 @@
+<div class="blog-trending-card position-relative border p-2 rounded-2 h-100">
+	<div class="blog-trending-img">
+		<img class="img-fluid" loading="lazy" style='height: 200px; width: 100%; object-fit: cover;' alt="{{ page.title }}" src="{{ page.coverImage ? upload_asset(page.coverImage.filePath) : '/website-theme/assets/img/placeholder.png' }}">
+	</div>
+	<div class="blog-trending-bottom">
+		{% if page.contentType.id != 4 %}
+			<div class="blog-trending-date">
+				{{ page.createdAt|format_datetime('full', 'none') }}
+			</div>
+		{% endif %}
+
+		<div class="blog-trending-head">
+			<h2>
+				{{ page.title }}
+			</h2>
+		</div>
+		{% if page.shortDescription %}
+			<p>{{ page.shortDescription }}...</p>
+		{% endif %}
+		{% if page.contentType.slug == 'static-page' %}
+			{% set pageLink = path('app_page_static_view', {'slug': page.slug}) %}
+		{% else %}
+			{% set pageLink = path('app_page_view', {contentTypeSlug: page.contentType.slug, 'slug': page.slug}) %}
+		{% endif %}
+		<a href="{{ pageLink }}" class='stretched-link more-btn'>
+			<span class="more-text">
+				Daha Fazla
+			</span>
+			<span class="more-icon">
+				<svg data-v-7a249f46="" width="5" height="8" viewbox="0 0 5 8" xmlns="http://www.w3.org/2000/svg">
+					<path data-v-7a249f46="" d="M0.595979 7.54558C0.321295 7.28 0.321055 6.83975 0.595449 6.57387L3.25176 4L0.59545 1.42613C0.321055 1.16025 0.321295 0.719998 0.595979 0.454419C0.858075 0.201011 1.27388 0.201011 1.53597 0.454419L4.45954 3.28108C4.86609 3.67415 4.86609 4.32585 4.45954 4.71892L1.53597 7.54558C1.27388 7.79899 0.858075 7.79899 0.595979 7.54558Z"></path>
+				</svg>
+			</span>
+		</a>
+	</div>
+</div>

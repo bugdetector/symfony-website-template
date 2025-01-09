@@ -1,0 +1,53 @@
+<section class="page-actions">
+	<div class="container-lg">
+		<div class="page-actions-flex">
+			<div class="page-actions-left">
+				{% if back_link is defined and back_link %}
+					<a href="{{ back_link }}">
+						<span class="more-btn">
+							<span class="more-icon">
+								<svg data-v-7a249f46="" width="5" height="8" viewbox="0 0 5 8" xmlns="http://www.w3.org/2000/svg">
+									<path data-v-7a249f46="" d="M0.595979 7.54558C0.321295 7.28 0.321055 6.83975 0.595449 6.57387L3.25176 4L0.59545 1.42613C0.321055 1.16025 0.321295 0.719998 0.595979 0.454419C0.858075 0.201011 1.27388 0.201011 1.53597 0.454419L4.45954 3.28108C4.86609 3.67415 4.86609 4.32585 4.45954 4.71892L1.53597 7.54558C1.27388 7.79899 0.858075 7.79899 0.595979 7.54558Z"></path>
+								</svg>
+							</span>
+							<span class="more-text">
+								Back
+							</span>
+						</span>
+					</a>
+				{% endif %}
+			</div>
+			<div class="page-actions-right">
+				<div class="page-actions-prev">
+					{% if prev_link is defined and prev_link %}
+						<a class="more-btn" href="{{ prev_link.href }}" title="{{ prev_link.title|default('Prev') }}">
+							<span class="more-icon">
+								<svg data-v-7a249f46="" width="5" height="8" viewbox="0 0 5 8" xmlns="http://www.w3.org/2000/svg">
+									<path data-v-7a249f46="" d="M0.595979 7.54558C0.321295 7.28 0.321055 6.83975 0.595449 6.57387L3.25176 4L0.59545 1.42613C0.321055 1.16025 0.321295 0.719998 0.595979 0.454419C0.858075 0.201011 1.27388 0.201011 1.53597 0.454419L4.45954 3.28108C4.86609 3.67415 4.86609 4.32585 4.45954 4.71892L1.53597 7.54558C1.27388 7.79899 0.858075 7.79899 0.595979 7.54558Z"></path>
+								</svg>
+							</span>
+							<span class="more-text">
+								Prev
+							</span>
+						</a>
+					{% endif %}
+				</div>
+				<div class="page-actions-line"></div>
+				<div class="page-actions-next">
+					{% if next_link is defined and next_link %}
+						<a class="more-btn" href="{{ next_link.href }}" title="{{ next_link.title }}">
+							<span class="more-text">
+								Next
+							</span>
+							<span class="more-icon">
+								<svg data-v-7a249f4s6="" width="5" height="8" viewbox="0 0 5 8" xmlns="http://www.w3.org/2000/svg">
+									<path data-v-7a249f46="" d="M0.595979 7.54558C0.321295 7.28 0.321055 6.83975 0.595449 6.57387L3.25176 4L0.59545 1.42613C0.321055 1.16025 0.321295 0.719998 0.595979 0.454419C0.858075 0.201011 1.27388 0.201011 1.53597 0.454419L4.45954 3.28108C4.86609 3.67415 4.86609 4.32585 4.45954 4.71892L1.53597 7.54558C1.27388 7.79899 0.858075 7.79899 0.595979 7.54558Z"></path>
+								</svg>
+							</span>
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

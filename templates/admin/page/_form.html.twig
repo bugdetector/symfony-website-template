@@ -1,9 +1,29 @@
+{% set tab = tab is defined and tab ? tab : 'general' %}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="fixed bottom-10 end-10">
-        <button type="submit" class="btn btn-success">
-            <i class="ki-filled ki-check"></i>
-            {% trans %}Save{% endtrans %}
-        </button>
-    </div>
+{{ form_errors(form) }}
+<div class="{{ tab != 'general' ? 'hidden' }}" id="general">
+	{{ form_row(form.title) }}
+	{{ form_row(form.shortDescription) }}
+	{{ form_row(form.slug) }}
+	{{ form_row(form.contentType) }}
+	{{ form_row(form.coverImage) }}
+	{{ form.sliderItems is defined ? form_row(form.sliderItems) }}
+	{{ form.boxItems is defined ? form_row(form.boxItems) }}
+	{{ form.body is defined ? form_row(form.body) }}
+	{{ form.attachments is defined ? form_row(form.attachments) }}
+	{{ form.accordionItems is defined ? form_row(form.accordionItems) }}
+	{{ form_row(form.galleryItems) }}
+</div>
+<div class="{{ tab != 'settings' ? 'hidden' }}" id="settings">
+	{{ form_row(form.published) }}
+</div>
+<div class="{{ tab != 'url-redirections' ? 'hidden' }}" id="url-redirections">
+	{{ form_row(form.urlRedirections) }}
+</div>
+<div class="fixed bottom-10 end-10">
+	<button type="submit" class="btn btn-success">
+		<i class="ki-filled ki-check"></i>
+		{% trans %}Save{% endtrans %}
+	</button>
+</div>
 {{ form_end(form) }}

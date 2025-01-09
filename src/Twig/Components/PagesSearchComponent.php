@@ -11,10 +11,13 @@
 
 namespace App\Twig\Components;
 
+use App\Entity\ContentType;
 use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
@@ -29,7 +32,10 @@ final class PagesSearchComponent extends DatatableComponent
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {
-        return $this->entityManager->getRepository(Page::class)->createQueryBuilder('p');
+        /** @var  */
+        $query = $this->entityManager->getRepository(Page::class)->createQueryBuilder('p')
+        ->join('p.contentType', 'c');
+        return $query;
     }
 
     #[Override]
@@ -44,9 +50,16 @@ final class PagesSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans("Id"),
                     'sortable' => true,
                 ],
+                'c.name' => [
+                    'label' => $this->translator->trans("Content Type"),
+                    'sortable' => true,
+                ],
                 'p.title' => [
                     'label' => $this->translator->trans("Title"),
                     'sortable' => true,
+                ],
+                [
+                    'label' => $this->translator->trans('Slug'),
                 ],
                 [
                     'label' => $this->translator->trans('Published'),
@@ -61,9 +74,20 @@ final class PagesSearchComponent extends DatatableComponent
                 ]
             ],
             "quick_filters" => [
-                "p.title" => []
+                "p.title" => [],
+                'c.name' => [],
             ],
             "filters" => [
+                'c.id' => [
+                    'type' => EntityType::class,
+                    'comparison' => '=',
+                    'options' => [
+                        'label' => 'Content Type',
+                        'class' => ContentType::class,
+                        'choice_label' => 'name',
+                        'placeholder' => $this->translator->trans('All'),
+                    ],
+                ],
                 'p.title' => [
                     'options' => [
                         'label' => 'Title',
@@ -79,6 +103,25 @@ final class PagesSearchComponent extends DatatableComponent
                             'Unpublished' => 0,
                         ],
                     ],
+                ],
+                'p.createdAtStart' => [
+                    'type' => DateType::class,
+                    'column' => 'f.createdAt',
+                    'comparison' => '>=',
+                    'options' => [
+                        'label' => 'Created At (From)',
+                    ]
+                ],
+                'p.createdAtEnd' => [
+                    'type' => DateType::class,
+                    'column' => 'f.createdAt',
+                    'comparison' => '<=',
+                    'valueProcessor' => function ($value) {
+                        return $value . " 23:59:59";
+                    },
+                    'options' => [
+                        'label' => 'Created At (To)',
+                    ]
                 ],
             ]
         ];

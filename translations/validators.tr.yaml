@@ -146,3 +146,8 @@ Error: Hata
 'Please enter your email': 'Lütfen e-postanızı girin'
 'You should agree to our terms.': 'Kullanım koşullarını kabul etmelisiniz.'
 'There is already an account with this email': 'Bu e-posta ile oluşturulmuş bir hesap bulunmaktadır.'
+'You must enter a valid email address': 'Geçerli bir e-posta adresi girmelisiniz.'
+'This value should not be empty.': 'Bu değer boş olamaz.'
+'Please enter at least 4 characters': 'En az 4 karakter giriniz.'
+'Please Enter maximum 15 characters': 'En çok 15 karakter giriniz.'
+'Please enter at least 15 characters': 'En az 15 karakter giriniz.'

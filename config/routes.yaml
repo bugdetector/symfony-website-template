@@ -1,3 +1,12 @@
+homepage:
+    path: /
+    controller: App\Controller\PageController::home
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+    options:
+        sitemap: true
 controllers:
     resource:
         path: ../src/Controller/

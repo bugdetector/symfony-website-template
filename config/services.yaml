@@ -6,6 +6,7 @@
 parameters:
     locale: '%env(APP_LOCALE)%'
     app_locales: en|tr
+    report.emails: '%env(REPORT_EMAILS)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -22,6 +23,7 @@ services:
             - { name: doctrine.event_listener, event: 'loadClassMetadata' }
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
+    Twig\Extension\StringLoaderExtension:
     App\:
         resource: '../src/'
         exclude:

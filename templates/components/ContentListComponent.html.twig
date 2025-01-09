@@ -1,0 +1,21 @@
+{% if title %}
+	<div class='blog-detail-small-head'>
+		<h2 class='mt-5'>{{ title|raw }}</h2>
+		<hr/>
+	</div>
+{% endif %}
+<div class="row">
+	{% set pagination = this.getPagination() %}
+	{% for page in pagination %}
+		<div class="col-lg-4 col-md-6 mt-4">
+			{% include "@website-theme/partials/content-card.html.twig" with {page} %}
+		</div>
+	{% endfor %}
+	<div class="col-md-12 text-center">
+		{% block pagination %}
+			{% if this.paginationEnabled %}
+				{{ knp_pagination_render(pagination, '@website-theme/partials/pagination.html.twig') }}
+			{% endif %}
+		{% endblock %}
+	</div>
+</div>

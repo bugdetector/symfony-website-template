@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\ContentTypeRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\UX\Turbo\Attribute\Broadcast;
+
+#[ORM\Entity(repositoryClass: ContentTypeRepository::class)]
+#[Broadcast(
+    topics: ['contentTypes'],
+    private: true
+)]
+class ContentType
+{
+    use TimestampableEntity;
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255, unique:true)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255, unique:true, nullable: true)]
+    #[Slug(fields:['name'])]
+    private ?string $slug = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+}

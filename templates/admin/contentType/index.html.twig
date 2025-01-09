@@ -1,0 +1,16 @@
+{% extends '@base_theme/base.html.twig' %}
+
+{% block actions %}
+	<div class="container-fluid flex md:justify-end items-center my-3 gap-5">
+		<a href='{{ path('app_admin_contentType_new') }}' class="btn btn-primary btn-sm">
+			<span class="flex justify-center items-center">
+				<span class="ki-solid ki-plus-circle text-md me-2"></span>
+				{% trans %}Add New Content Type{% endtrans %}
+			</span>
+		</a>
+	</div>
+{% endblock %}
+
+{% block body %}
+	{{ component('ContentTypeSearchComponent', {listTopic: 'contentTypes'}) }}
+{% endblock %}

@@ -45,9 +45,18 @@ class SitemapSubscriber implements EventSubscriberInterface
         foreach ($pages as $page) {
             $urls->addUrl(
                 new UrlConcrete(
+                    $page->getContentType()->getSlug() === 'static-page' ?
+                    $router->generate(
+                        'app_page_static_view',
+                        [
+                            'slug' => $page->getSlug()
+                        ],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    ) :
                     $router->generate(
                         'app_page_view',
                         [
+                            'contentTypeSlug' => $page->getContentType()->getSlug(),
                             'slug' => $page->getSlug()
                         ],
                         UrlGeneratorInterface::ABSOLUTE_URL

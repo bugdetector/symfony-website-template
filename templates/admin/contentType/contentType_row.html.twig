@@ -1,0 +1,29 @@
+{% set action = action is defined ? action : null %}
+<tr id="contentType_{{ contentType.id }}" class='{{ action ? ' action-' ~ action }}'>
+	<td class="px-6 py-3 flex gap-2">
+		{% if action != 'remove' %}
+			<a class="btn btn-sm btn-icon btn-clear btn-primary" href="{{ path('app_admin_contentType_edit', {'id': contentType.id}) }}">
+				<i class="ki-outline ki-notepad-edit"></i>
+			</a>
+			{% if action == null %}
+				<form method="post" action="{{ path('app_admin_contentType_delete', {'id': contentType.id}) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contentType.id) }}">
+					{% set modalId = 'delete-modal-' ~ contentType.id %}
+					<button type='button' class="btn btn-sm btn-icon btn-clear btn-danger" role='button' data-modal-toggle="#{{ modalId }}">
+						<i class="ki-outline ki-trash"></i>
+					</button>
+					{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "Content Type"|trans} %}
+				</form>
+			{% endif %}
+		{% endif %}
+	</td>
+	<td class="px-6 py-3">{{ contentType.id }}</td>
+	<td class="px-6 py-3">{{ contentType.name }}</td>
+	<td class="px-6 py-3">{{ contentType.slug }}</td>
+	<td class='px-6 py-3 text-nowrap'>
+		<time>{{ contentType.createdAt|format_datetime() }}</time>
+	</td>
+	<td class='px-6 py-3 text-nowrap'>
+		<time>{{ contentType.updatedAt|format_datetime() }}</time>
+	</td>
+</tr>

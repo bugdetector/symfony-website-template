@@ -1,0 +1,158 @@
+<section id="contact-form" class="contact" {{ attributes }}>
+	<div class="container-lg">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="contact-head">
+					<h2 class="section-head">İletişime geçin</h2>
+					<p class="section-desc">Köpeklerimiz hakkında danışmanlık sağlamak için heyecanlanıyoruz.</p>
+				</div>
+				<div class="contact-step">
+					<div class="contact-step-head">İletişim formunu gönderdikten sonra ne olacak?</div>
+					<ul class="contact-step-list">
+						<li>
+							<span class="contact-step-circle">01</span>
+							<span class="contact-step-text">Uzman bir ekip arakadaşımız mesajınızı inceleyecek</span>
+						</li>
+						<li>
+							<span class="contact-step-circle">02</span>
+							<span class="contact-step-text">Gerekli görülürse sizinle telefon ya da e-posta üzerinden iletişime geçeceğiz.</span>
+						</li>
+						<li class="last">
+							<span class="contact-step-circle">03</span>
+							<span class="contact-step-text">Mesajınıza uygun çözüm önerileri ve teklifler sunacağız.</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-8">
+                {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    <div class="contact-card">
+                        <div class="row">
+                            <div class="form-floating col-md-6">
+                                <input id="contact-email"
+                                    name="{{ field_name(form.email) }}"
+                                    value='{{ field_value(form.email) }}'
+                                    class="form-control"
+                                    type="email"
+                                    placeholder="{{ field_label(form.email) }}">
+                                <label for="contact-email">{{ field_label(form.email) }}*</label>
+                                <div class="form-error text-danger">
+                                    {{ form_errors(form.email) }}
+                                </div>
+                            </div>
+                            <div class="form-floating col-md-6">
+                                <input id="contact-phone" 
+                                name="{{ field_name(form.phone) }}"
+                                value='{{ field_value(form.phone) }}'
+                                class="form-control" 
+                                type="tel" 
+                                placeholder="{{ field_label(form.phone) }}">
+                                <label for="contact-phone">{{ field_label(form.phone) }}*</label>
+                                <div class="form-error text-danger">
+                                    {{ form_errors(form.phone) }}
+                                </div>
+                            </div>
+                            <div class="form-floating col-md-12 mt-3">
+                                <input id="contact-name"
+                                    name="{{ field_name(form.name) }}"
+                                    value='{{ field_value(form.name) }}'
+                                    class="form-control"
+                                    type="text" 
+                                    placeholder="{{ field_label(form.name) }}">
+                                <label for="contact-name">{{ field_label(form.name) }}*</label>
+                                <div class="form-error text-danger">
+                                    {{ form_errors(form.name) }}
+                                </div>
+                            </div>
+                            <div class="form-floating col-md-12 mt-3">
+                                <textarea id="contact-message" 
+                                name="{{ field_name(form.message) }}"
+                                class="form-control h-auto" 
+                                type="text" 
+                                placeholder="{{ field_label(form.message) }}"
+                                rows="5">{{ field_value(form.message) }}</textarea>
+                                <label for="contact-message">{{ field_label(form.message) }}*</label>
+                                <div class="form-error text-danger">
+                                    {{ form_errors(form.message) }}
+                                </div>
+                            </div>
+                            <div class="form-info col-md-12 mt-3">Bu formu göndererek kişisel verilerimin gizlilik politikasında belirtildiği gibi kullanılmasına izin veriyorum.</div>
+                        </div>
+                        <div class="row">
+                            <div class='col-12 mt-4'>
+                                {{ include('@website-theme/partials/flash_messages.html.twig') }}
+                            </div>
+                            <div class="col-md-12 mt-4">
+                                <button type='submit' class="form-send-btn">Mesajı Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+			</div>
+		</div>
+        <div class="row mt-3">
+			<div class="col-md-4">
+				<div class="contact-step">
+					<div class="contact-step-head">İletişim Bilgileri</div>
+					<ul class="contact-step-list">
+						<li>
+							<span class="contact-step-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20.694" height="20.708" viewbox="0 0 20.694 20.708">
+                                    <g id="maps-icon" transform="translate(0 0.016)">
+                                        <path id="Path_8252" data-name="Path 8252" d="M13.727,13.13l2.1-3.647a6.269,6.269,0,0,0,0-6.338,6.338,6.338,0,0,0-10.968,0,6.269,6.269,0,0,0,0,6.338l2.1,3.63c-3.5.431-6.95,1.543-6.95,3.7,0,2.664,5.363,3.88,10.347,3.88s10.347-1.216,10.347-3.88C20.694,14.656,17.245,13.544,13.727,13.13ZM6.355,4.025a4.6,4.6,0,1,1,7.976,4.6l-3.984,6.9L6.363,8.62a4.579,4.579,0,0,1-.009-4.6Zm3.992,14.943c-5.691,0-8.623-1.509-8.623-2.156,0-.457,1.854-1.681,6.191-2.052L9.08,16.769a1.466,1.466,0,0,0,2.535,0l1.164-2.009c4.337.371,6.191,1.621,6.191,2.052C18.97,17.458,16.038,18.967,10.347,18.967Z" fill="#000"/>
+                                        <circle id="Ellipse_159" data-name="Ellipse 159" cx="1.725" cy="1.725" r="1.725" transform="translate(8.623 4.309)" fill="#000"/>
+                                    </g>
+                                </svg>
+                            </span>
+							<span class="contact-step-text">
+                                <b>Adres</b>
+                                <br>
+                                Koçullu Mahallesi Koçullu Köyü Koçullu Caddesi No: 88
+                                <br>
+                                Çekmeköy İstanbul
+                            </span>
+						</li>
+						<li class="position-relative">
+							<span class="contact-step-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23.8" height="19.8" viewbox="0 0 23.8 19.8">
+                                <g id="_38.mail" data-name="38.mail" transform="translate(-0.1 -2.1)">
+                                    <rect id="Rectangle_1457" data-name="Rectangle 1457" width="22" height="18" rx="3" transform="translate(1 3)" fill="none"/>
+                                    <rect id="Rectangle_1458" data-name="Rectangle 1458" width="22" height="18" rx="3" transform="translate(1 3)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                                    <path id="Path_8253" data-name="Path 8253" d="M2,4l10,9L22,4" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                                    <line id="Line_380" data-name="Line 380" y1="4" x2="4" transform="translate(5 11)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                                    <line id="Line_381" data-name="Line 381" x1="4" y1="4" transform="translate(15 11)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                                </g>
+                            </svg>
+                            </span>
+							<span class="contact-step-text">
+                                <b>E-posta</b>
+                                <br/>
+                                <a href="mailto:bilgi@almankurdu.com" class='stretched-link text-decoration-none text-body'>
+                                    bilgi@almankurdu.com
+                                </a>
+                            </span>
+						</li>
+						<li class="last position-relative">
+							<span class="contact-step-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19.861" height="19.895" viewbox="0 0 19.861 19.895">
+                                    <path id="_13003354851543238910" data-name="13003354851543238910" d="M13.24,4.44a4.3,4.3,0,0,1,3.4,3.4M13.24,1a7.741,7.741,0,0,1,6.838,6.829m-.86,6.863v2.58a1.72,1.72,0,0,1-1.875,1.72,17.021,17.021,0,0,1-7.423-2.64,16.772,16.772,0,0,1-5.161-5.161,17.021,17.021,0,0,1-2.64-7.457A1.72,1.72,0,0,1,3.83,1.86h2.58a1.72,1.72,0,0,1,1.72,1.479,11.043,11.043,0,0,0,.6,2.417,1.72,1.72,0,0,1-.387,1.815L7.254,8.663a13.761,13.761,0,0,0,5.161,5.161l1.092-1.092a1.72,1.72,0,0,1,1.815-.387,11.043,11.043,0,0,0,2.417.6,1.72,1.72,0,0,1,1.479,1.746Z" transform="translate(-1.211 -0.006)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                                </svg>
+                            </span>
+							<span class="contact-step-text">
+                                <b>Telefon</b>
+                                <br/>
+                                <a href="tel:+9005334095500" class='stretched-link text-decoration-none text-body'>
+                                    0533 409 55 00
+                                </a>
+                            </span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-8">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.06300956947!2d29.348951075636254!3d41.06761531576975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cad4cfad8610a3%3A0xb944cff620a5155f!2sElit%20Yavru%20-%20Petworld%20Kennel!5e0!3m2!1str!2str!4v1725792638445!5m2!1str!2str"  style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100 rounded-3"></iframe>
+			</div>
+		</div>
+	</div>
+</section>

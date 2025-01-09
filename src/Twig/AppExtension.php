@@ -49,7 +49,7 @@ final class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('locales', $this->getLocales(...)),
-            new TwigFunction('upload_asset', $this->uploadAsset(...))
+            new TwigFunction('upload_asset', $this->uploadAsset(...)),
         ];
     }
 

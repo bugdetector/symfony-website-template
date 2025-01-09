@@ -1,0 +1,222 @@
+.about-slider {
+    position: relative;
+    margin-top: 95px;
+}
+.about-text{
+    height: 100%;
+}
+.about-text .container-lg{
+    height: 100%;
+}
+.about-img {
+    width: 100%;
+}
+
+.about-img img {
+    object-fit: cover;
+    width: 100%;
+    max-height: 550px;
+}
+
+.about-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.about-text-bg {
+    padding: 60px 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+}
+.about-head{
+    max-width: 600px;
+}
+.about-pr-desc{
+    font-size: 18px !important;
+    color: var(--blue);
+}
+.about-head h1 {
+    font-size: 45px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+}
+
+.about-head p {
+    font-size: 20px;
+    font-weight: 40;
+    color: white;
+}
+
+.about-left a {
+    background-color: var(--orange);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+}
+
+.about-right {
+    margin-left: auto;
+}
+
+.about-alt {
+    -webkit-column-gap: 1.55rem;
+    column-gap: 1.55rem;
+    margin: 40px 0;
+}
+
+.features {
+    margin-top: 80px;
+}
+
+.features .services-card-desc {
+    min-height: unset;
+}
+
+.features .services-card-head {
+    max-width: unset;
+}
+
+.features .section-head {
+    font-size: 30px;
+}
+
+.step {
+    margin-top: 100px;
+    background-color: var(--blue);
+    padding: 50px 0px;
+}
+
+.step-head h2 {
+    text-transform: capitalize;
+    color: white;
+    font-size: 45px;
+    font-weight: 500;
+}
+
+.step-head p {
+    font-weight: 300;
+    font-size: 18px;
+    color: white;
+}
+.step-item{
+    height: 100%;
+}
+.step-circle{
+    width: 50px;
+    height: 50px;
+    background-color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    border-radius: 50%;
+}
+.step-head {
+    margin-top: 10px;
+}
+.step-head h6{
+    font-size: 22px;
+    color: white;
+    font-weight: 500;
+}
+.step-desc p{
+    font-size: 15px;
+    color: white;
+    font-weight: 300;
+}
+@media only screen and (max-width: 992px) {
+    .about-head h1{
+        font-size: 35px;
+    }
+    .about-head p{
+        font-size: 16px;
+    }
+    .about-left a{
+        height: 40px;
+        width: 170px;
+        font-size: 14px;
+    }
+    .about-alt{
+        margin: 10px 0px;
+    }
+    .slider-bottom{
+        margin: 20px 0px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .about-pr-desc{
+        font-size: 16px !important;
+        color: var(--blue);
+    }
+    .actions-fixed {
+        top: 59px;
+    }
+    .about-slider{
+        margin-top: 66px;
+    }
+    .about-img img{
+        min-height: 450px !important;
+    }
+    .features .section-head{
+        font-size: 30px;
+    }
+    .section-desc{
+        font-size: 16px;
+    }
+    .features{
+        margin-top: 50px;
+    }
+    .services-card-head h6{
+        font-size: 18px;
+    }
+    .services-card-icon svg{
+        width: 60px;
+        height: 60px;
+    }
+    .services-card-desc p{
+        font-size: 15px;
+    }
+    .step-head h2{
+        font-size: 30px;
+    }
+    .step-head p{
+        font-size: 16px;
+    }
+    .step-head h6{
+        font-size: 18px;
+    }
+    .step-circle{
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .step-desc p{
+        font-size: 14px;
+    }
+    .step{
+        margin-top: 50px;
+    }
+    .projects{
+        margin-top: 50px;
+    }
+}
+@media only screen and (max-width: 576px) {
+    .page-head{
+        font-size: 30px;
+    }
+   
+}

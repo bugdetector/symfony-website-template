@@ -1,0 +1,33 @@
+{# Learn how to use Turbo Streams: https://github.com/symfony/ux-turbo#broadcast-doctrine-entities-update #}
+{% block create %}
+<turbo-stream action="prepend" target="contentTypes">
+    <<template>
+			{% include "admin/contentType/contentType_row.html.twig" with {
+				contentType: entity,
+				action: "create"
+			} %}
+		</template>
+</turbo-stream>
+{% endblock %}
+
+{% block update %}
+<turbo-stream action="replace" target="contentType_{{ id }}">
+    <template>
+			{% include "admin/contentType/contentType_row.html.twig" with {
+				contentType: entity,
+				action: "update"
+			} %}
+		</template>
+</turbo-stream>
+{% endblock %}
+
+{% block remove %}
+    <turbo-stream action="replace" target="contentType_{{ id }}">
+		<template>
+			{% include "admin/contentType/contentType_row.html.twig" with {
+				contentType: entity,
+				action: "remove"
+            } %}
+		</template>
+	</turbo-stream>
+{% endblock %}

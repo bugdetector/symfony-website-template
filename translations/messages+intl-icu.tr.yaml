@@ -88,22 +88,68 @@ page.deleted_successfully: 'Sayfa başarıyla silindi.'
 'You can reset your password using the link below. This link will expire in {expire}': 'Aşağıdaki bağlantıyı kullanarak şifrenizi sıfırlayabilirsiniz. Bu linkin kullanımı {expire} sonra sona erecektir.'
 'Hi {user}': 'Merhaba {user}'
 'Edit File: { name }': 'Dosyayı Düzenle: { name }'
+'Content Types': 'İçerik Türleri'
+contentType.created_successfully: 'İçerik türü başarıyla oluşturuldu'
+'Add New Content Type': 'Yeni İçerik Türü Ekler'
+contentType.updated_successfully: 'İçerik türü başarıyla güncellendi'
+'Edit Content Type {name}': 'İçerik Türünü Düzenle: {name}'
+contentType.deleted_successfully: 'İçerik türü başarıyla silindi'
+Slug: Slug
+'Content Type': 'İçerik Türü'
+'Content type': 'İçerik Türü'
+Create: Oluştur
+Cancel: İptal
 'Sorry, an unknown error occured.': 'Üzgünüz, bilinmeyen bir hata oluştu.'
-'Back to Homepage': 'Anasayfaya Dön'
-'Page not found': 'Sayfa bulunamadı'
-"Sorry, we can't find the page you requested.": 'Üzgünüz, aradığınız sayfayı bulamadık.'
-'Access Denied': 'Erişim Engellendi'
-"Sorry, you don't have access to view this page.": 'Üzgünüz, bu sayfa erişim izniniz yok.'
+'Back to Homepage': 'Anasayfaya dön'
+'Page not found': 'Sayfa bulunamdı'
+"Sorry, we can't find the page you requested.": 'Üzgünüz, istediğiniz sayfayı bulamadık.'
+'Access Denied': 'Erişim engellendi.'
+"Sorry, you don't have access to view this page.": 'Üzgünüz, bu sayfaya erişim izniniz yok.'
+'Navbar items saved successfully.': 'Navbar ögeleri başarıyla kaydedildi.'
+'Navbar Items': 'Navbar Öğeleri'
+'Contact Forms': 'İletişim Formları'
+'Edit Contact {name}': 'İletişim formu düzenle {name}'
+Phone: Telefon
+'Contact Form': 'İletişim Formu'
+Navbar: Navbar
+'Short Description': 'Kısa Açıklama'
+Attachments: Ekler
+'Url redirections': 'Url Yönlendirmeleri'
+Message: Mesaj
+'Select content type': 'İçerik türü seçiniz'
+'Cover image': 'Kapak resmi'
+'Gallery items': 'Galeri resimleri'
+'From url': 'Yönlendirilen URL'
+Add: Ekle
+Insert: 'Ucuna ekle'
+'Add new Url Redirection': 'Yeni Url yönlendirmesi ekle'
+General: Genel
+Settings: Ayarlar
+'Url Redirections': 'Url Yönlendirmeleri'
+'Upload a PNG/JPG file.': 'Lütfen bir PNG/JPG resim dosyası yükleyin.'
+'Enter page title.': 'Sayfa başlığını giriniz.'
+'Slider items': 'Kaydırıcı ögeleri'
+'Slider image': 'Kaydırıcı resmi'
+'Add new Slider Item': 'Yeni kaydırıcı resmi ekle'
+'Accordion items': 'Akordiyon ögeleri'
+'Add new Accordion Item': 'Yeni akordiyon ögesi ekle'
+'Old url': 'Eski Url'
 'Profile updated successfully': 'Profile başarıyla güncellendi.'
 Profile: Profil
 Upload: 'Dosya Yükle'
 'Dark Mode': 'Karanlık Mod'
 Language: Dil
+'Contact form saved successfully': 'İletişim formu başarıyla kaydedildi'
+'Contact form deleted successfully': 'İletişim formu başarıyla silindi.'
+'Add New label': 'Yeni label ekle'
+'Contact number': 'İletişim numarası'
+'Contact name': 'İletişim ismi'
+'Box items': 'Kutu ögeleri'
+'Add new Box Item': 'Yeni kutu ögesi ekle'
+Image: Resim
 'Registration Date (From)': 'Üyelik Tarihi (Başlangıç)'
 'Registration Date (To)': 'Üyelik Tarihi (Bitiş)'
 All: Tümü
 Clear: Temizle
-'Add New label': 'Yeni label ekle'
-Add: Ekle
 'Created At (From)': 'Oluşturulma Tarihi (Başlangıç)'
 'Created At (To)': 'Oluşturulma Tarihi (Bitiş)'
