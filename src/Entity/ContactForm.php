@@ -21,7 +21,7 @@ class ContactForm
 
     #[ORM\Column(length: 255)]
     #[Email(message: "You must enter a valid email address")]
-    #[NotNull(message: 'This value should not be empty.')]
+    #[NotNull(message: 'Please enter a valid email address.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -31,7 +31,7 @@ class ContactForm
         max: 15,
         maxMessage: "Please Enter maximum 15 characters"
     )]
-    #[NotNull(message: 'This value should not be empty.')]
+    #[NotNull(message: 'Please enter a valid phone.')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
@@ -39,7 +39,7 @@ class ContactForm
         min: 4,
         minMessage: 'Please enter at least 4 characters'
     )]
-    #[NotNull(message: 'This value should not be empty.')]
+    #[NotNull(message: 'Please enter your name.')]
     private ?string $name = null;
 
     #[ORM\Column(length: 1000)]
@@ -47,7 +47,7 @@ class ContactForm
         min: 15,
         minMessage: 'Please enter at least 15 characters'
     )]
-    #[NotNull(message: 'This value should not be empty.')]
+    #[NotNull(message: 'Please enter your message.')]
     private ?string $message = null;
 
     public function __construct()

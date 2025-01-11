@@ -35,7 +35,8 @@ class ContactForm extends AbstractController
         $form = $this->createForm(ContactFormType::class, $this->initialFormData, [
             'attr' => [
                 'data-action' => 'live#action:prevent',
-                'data-live-action-param' => 'save'
+                'data-live-action-param' => 'save',
+                'novalidate' => true
             ]
         ]);
         return $form;
@@ -51,12 +52,12 @@ class ContactForm extends AbstractController
         $entityManager->flush();
 
         $this->initialFormData = new EntityContactForm();
-        $this->addFlash('success', 'Mesajınızı aldık, teşekkür ederiz.');
-        $this->formValues = [];
+        $this->addFlash('success', 'We have received your contact details, thank you.');
+        $this->resetForm();
 
         $email = (new TemplatedEmail())
             ->to(...explode(';', $this->getParameter('report.emails')))
-            ->subject('İletişim Formu')
+            ->subject('Contact Form')
             ->htmlTemplate('contact_form/email.html.twig')
             ->context([
                 'contactForm' => $contactForm
