@@ -141,7 +141,6 @@ Upload: 'Dosya Yükle'
 Language: Dil
 'Contact form saved successfully': 'İletişim formu başarıyla kaydedildi'
 'Contact form deleted successfully': 'İletişim formu başarıyla silindi.'
-'Add New label': 'Yeni label ekle'
 'Contact number': 'İletişim numarası'
 'Contact name': 'İletişim ismi'
 'Box items': 'Kutu ögeleri'
@@ -151,5 +150,6 @@ Image: Resim
 'Registration Date (To)': 'Üyelik Tarihi (Bitiş)'
 All: Tümü
 Clear: Temizle
+'Add New label': 'Yeni {label} ekle'
 'Created At (From)': 'Oluşturulma Tarihi (Başlangıç)'
 'Created At (To)': 'Oluşturulma Tarihi (Bitiş)'

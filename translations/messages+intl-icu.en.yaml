@@ -127,6 +127,6 @@ Upload: Upload
 Language: Language
 'Contact form saved successfully': 'Contact form saved successfully'
 'Contact form deleted successfully': 'Contact form deleted successfully'
-'Add New label': 'Add New label'
 Clear: Clear
 All: All
+'Add New label': 'Add New {label}'
