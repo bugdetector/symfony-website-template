@@ -1,7 +1,7 @@
 #syntax=docker/dockerfile:1
 
 # Versions
-FROM dunglas/frankenphp:1-php8.3 AS frankenphp_upstream
+FROM dunglas/frankenphp:1-php8.4 AS frankenphp_upstream
 
 # The different stages of this Dockerfile are meant to be built into separate images
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
@@ -35,6 +35,7 @@ RUN set -eux; \
 		sockets \
 		pdo \
 		pdo_mysql \
+		gd \
 	;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
@@ -87,8 +88,8 @@ RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 
 # install npm dependencies
-RUN npm install
-RUN npm run build
+RUN npm install; \
+	npm run build;
 # copy sources
 COPY --link . ./
 RUN rm -Rf frankenphp/
