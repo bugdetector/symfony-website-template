@@ -158,3 +158,6 @@ Error: Error
 'Please enter at least 4 characters': 'Please enter at least 4 characters'
 'Please Enter maximum 15 characters': 'Please Enter maximum 15 characters'
 'Please enter at least 15 characters': 'Please enter at least 15 characters'
+'Please enter a valid phone.': 'Please enter a valid phone.'
+'Please enter your name.': 'Please enter your name.'
+'Please enter your message.': 'Please enter your message.'

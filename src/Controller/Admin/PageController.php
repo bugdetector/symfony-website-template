@@ -57,7 +57,7 @@ class PageController extends AbstractController
             );
             $entityManager->persist($page);
             $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('page.created_successfully'));
+            $this->addFlash('success', $this->translator->trans('Page created successfully.'));
             return $this->redirectToRoute('app_admin_page_edit', [
                 'id' => $page->getId(),
             ], Response::HTTP_SEE_OTHER);

@@ -185,3 +185,7 @@ Category: Kategori
 'Remove Selected': 'Seçilenleri Sil'
 'Are you sure want to remove selected items?': 'Seçili öğeleri silmek istediğinize emin misiniz?'
 'Static Page': 'Statik Sayfa'
+Menus: Menüler
+'Add New Menu': 'Yeni menü ekle'
+'Edit Menu: {name}': 'Menüyü düzenle: {name}'
+'Parent': 'Üst'

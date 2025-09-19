@@ -158,3 +158,7 @@ Error: Hata
 'Please enter at least 4 characters': 'En az 4 karakter giriniz.'
 'Please Enter maximum 15 characters': 'En çok 15 karakter giriniz.'
 'Please enter at least 15 characters': 'En az 15 karakter giriniz.'
+'Please enter a valid phone.': 'Lütfen geçerli bir telefon numarası girin.'
+'Please enter your name.': 'Lütfen adınızı girin.'
+'Please enter your message.': 'Lütfen mesajınızı girin.'
+
