@@ -161,3 +161,4 @@ Error: Error
 'Please enter a valid phone.': 'Please enter a valid phone.'
 'Please enter your name.': 'Please enter your name.'
 'Please enter your message.': 'Please enter your message.'
+'An entity cannot be its own parent.': 'An entity cannot be its own parent.'
