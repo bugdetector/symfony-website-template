@@ -6,10 +6,19 @@ use App\Entity\ContactForm;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent(name: 'contact_form_search')]
+#[AsLiveComponent(template: '@base_theme/partials/_datatable.html.twig')]
 final class ContactFormSearchComponent extends DatatableComponent
 {
+    #[LiveProp(writable: true, url: true)]
+    public string $sort = 'cf.createdAt';
+    #[LiveProp(writable: true, url: true)]
+    public string $direction = 'DESC';
+
+    #[LiveProp(writable: false)]
+    public ?string $rowTemplateFile = "admin/contact_form/_row.html.twig";
+
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {
@@ -34,6 +43,7 @@ final class ContactFormSearchComponent extends DatatableComponent
                 ],
                 'cf.email' => [
                     'label' => $this->translator->trans('Email'),
+                    'sortable' => true,
                 ],
                 'cf.phone' => [
                     'label' => $this->translator->trans('Phone'),
@@ -52,6 +62,16 @@ final class ContactFormSearchComponent extends DatatableComponent
                 "cf.email" => []
             ],
             "filters" => [
+                'cf.name' => [
+                    'options' => [
+                        'label' => 'Name',
+                    ],
+                ],
+                'cf.email' => [
+                    'options' => [
+                        'label' => 'Email',
+                    ],
+                ],
             ]
         ];
     }

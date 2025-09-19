@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ContactForm;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +20,7 @@ class ContactFormAdminType extends AbstractType
             ->add('email')
             ->add('phone')
             ->add('name')
-            ->add('message');
+            ->add('message', TextareaType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
