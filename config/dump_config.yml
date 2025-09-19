@@ -5,3 +5,10 @@ configuration:
     - value
   filterFields:
     - configKey
+contentType:
+  entity: App\Entity\ContentType
+  importFields:
+    - name
+    - slug
+  filterFields:
+    - name

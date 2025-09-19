@@ -87,7 +87,7 @@ Body: Gövde
 'Edit File: { name }': 'Dosyayı Düzenle: { name }'
 'Content Types': 'İçerik Türleri'
 contentType.created_successfully: 'İçerik türü başarıyla oluşturuldu'
-'Add New Content Type': 'Yeni İçerik Türü Ekler'
+'Add New Content Type': 'Yeni İçerik Türü Ekle'
 contentType.updated_successfully: 'İçerik türü başarıyla güncellendi'
 'Edit Content Type {name}': 'İçerik Türünü Düzenle: {name}'
 contentType.deleted_successfully: 'İçerik türü başarıyla silindi'
