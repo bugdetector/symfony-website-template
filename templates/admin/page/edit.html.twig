@@ -8,34 +8,19 @@
 {% endblock %}
 
 {% block actions %}
-	<div class="grid items-stretch">
-		<div class="scrollable-x-auto flex items-stretch text-nowrap">
-			<div class="tabs px-4">
-				<a href="{{ path('app_admin_page_edit', {id: page.id ?? 'new', tab: 'general'}) }}" class="tab {{ tab == 'general' ? 'active' }}">
-					{% trans %}General{% endtrans %}
-				</a>
-				<a href="{{ path('app_admin_page_edit', {id: page.id, tab: 'settings'}) }}" class="tab {{ tab == 'settings' ? 'active' }}">
-					{% trans %}Settings{% endtrans %}
-				</a>
-				<a href="{{ path('app_admin_page_edit', {id: page.id, tab: 'url-redirections'}) }}" class="tab {{ tab == 'url-redirections' ? 'active' }}">
-					{% trans %}Url Redirections{% endtrans %}
-				</a>
-			</div>
-		</div>
-	</div>
 	<div class="ms-auto my-3 me-3">
 		{% if page is defined and page.id %}
 			{% if page.contentType.slug == 'static-page' %}
-				<a href='{{ path('app_page_static_view', {'slug': page.slug}) }}' target="_blank" class="btn btn-info btn-sm">
+				<a href='{{ path('app_page_static_view', {'slug': page.slug}) }}' target="_blank" class="btn btn-info btn-outline">
 					<span class="flex justify-center items-center">
-						<span class="ki-solid ki-eye text-md me-2"></span>
+						<span class="i-tabler-eye text-md me-2"></span>
 						{% trans %}View Page{% endtrans %}
 					</span>
 				</a>
 			{% else %}
-				<a href='{{ path('app_page_view', {contentTypeSlug: page.contentType.slug, 'slug': page.slug}) }}' target="_blank" class="btn btn-info btn-sm">
+				<a href='{{ path('app_page_view', {contentTypeSlug: page.contentType.slug, 'slug': page.slug}) }}' target="_blank" class="btn btn-info btn-outline">
 					<span class="flex justify-center items-center">
-						<span class="ki-solid ki-eye text-md me-2"></span>
+						<span class="i-tabler-eye text-md me-2"></span>
 						{% trans %}View Page{% endtrans %}
 					</span>
 				</a>
@@ -43,24 +28,7 @@
 		{% endif %}
 	</div>
 {% endblock %}
-{% block flashes %}{% endblock %}
 {% block body %}
-	<div class="flex flex-wrap">
-		<div class="md:w-9/12 w-full">
-			{{ component('Forms:LivePageForm', {
-				initialFormData: page,
-				tab
-			}) }}
-		</div>
-		<div class="md:w-3/12 w-full p-3">
-			<div class='mb-3'>
-				<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
-				<div>{{ page.createdAt|format_datetime('full', 'short') }}</div>
-			</div>
-			<div class='mb-3'>
-				<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
-				<div>{{ page.updatedAt|format_datetime('full', 'short') }}</div>
-			</div>
 	<div class="flex flex-wrap p-3">
 		<div class="md:w-9/12 w-full">				
 			{{ component('LiveForms:LivePageFormComponent', { initialFormData: page }) }}

@@ -54,12 +54,12 @@ final class PagesSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans("Id"),
                     'sortable' => true,
                 ],
-                'c.name' => [
-                    'label' => $this->translator->trans("Content Type"),
-                    'sortable' => true,
-                ],
                 'p.title' => [
                     'label' => $this->translator->trans("Title"),
+                    'sortable' => true,
+                ],
+                'c.name' => [
+                    'label' => $this->translator->trans("Content Type"),
                     'sortable' => true,
                 ],
                 [
@@ -98,6 +98,18 @@ final class PagesSearchComponent extends DatatableComponent
                 'p.title' => [
                     'options' => [
                         'label' => 'Title',
+                    ],
+                ],
+                'p.contentType' => [
+                    'type' => EntityType::class,
+                    'comparison' => '=',
+                    'options' => [
+                        'label' => 'Content Type',
+                        'class' => ContentType::class,
+                        'choice_label' => function (ContentType $contentType) {
+                            return $this->translator->trans($contentType->getName());
+                        },
+                        'placeholder' => 'Select content type',
                     ],
                 ],
                 'p.category' => [

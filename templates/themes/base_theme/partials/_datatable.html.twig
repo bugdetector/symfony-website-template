@@ -102,7 +102,7 @@
 					{% endblock %}
 				</tr>
 			</thead>
-			<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic, options: {withCredentials: true} ) }}>
+			<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }}>
 				{% block rows %}
 					{% if this.rowTemplateFile %}
 						{% for object in pagination %}

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\ContentType;
 use App\Entity\Page\Page;
+use App\Repository\ContentTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,8 +30,9 @@ class PageController extends AbstractController
             ])
             ->add("contentType", EntityType::class, [
                 'class' => ContentType::class,
-                'choice_label' => 'name',
-                'autocomplete' => true,
+                'choice_label' => function (ContentType $contentType) {
+                    return $this->translator->trans($contentType->getName());
+                },
                 'placeholder' => 'Select content type'
             ])
             ->setAction($this->generateUrl("app_admin_page_new"))
@@ -41,14 +43,26 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_page_new', methods: ['GET'])]
-    public function new(): Response
-    {
-        $page = new Page();
-        return $this->render('admin/page/edit.html.twig', [
-            'title' => $this->translator->trans('Add New Page'),
-            'page' => $page,
-        ]);
+    #[Route('/new', name: 'app_admin_page_new', methods: ['POST'])]
+    public function new(
+        Request $request,
+        ContentTypeRepository $contentTypeRepository,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        if ($this->isCsrfTokenValid('new', $request->request->get('_token'))) {
+            $page = new Page();
+            $page->setTitle($request->get('form')['title']);
+            $page->setContentType(
+                $contentTypeRepository->find($request->get('form')['contentType'])
+            );
+            $entityManager->persist($page);
+            $entityManager->flush();
+            $this->addFlash('success', $this->translator->trans('page.created_successfully'));
+            return $this->redirectToRoute('app_admin_page_edit', [
+                'id' => $page->getId(),
+            ], Response::HTTP_SEE_OTHER);
+        }
+        return $this->redirectToRoute('app_admin_page_index');
     }
 
     #[Route('/{id}/edit', name: 'app_admin_page_edit', methods: ['GET'])]

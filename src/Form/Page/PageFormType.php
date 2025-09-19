@@ -32,9 +32,7 @@ class PageFormType extends AbstractType
             ])
             ->add('contentType', EntityType::class, [
                 'class' => ContentType::class,
-                'label' => 'Content Type',
                 'choice_label' => 'name',
-                'autocomplete' => true,
                 'placeholder' => 'Select content type',
                 'disabled' => true
             ])
@@ -64,6 +62,7 @@ class PageFormType extends AbstractType
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Category',
             ])
             ->add('body', options: [
                 'attr' => [

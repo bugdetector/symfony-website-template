@@ -1,35 +1,4 @@
 {% set action = action is defined ? action : null %}
-<tr id="page_{{ page.id }}" class='{{ action ? ' action-' ~ action }}'>
-	<td class="px-6 py-3 flex gap-2">
-		{% if action != 'remove' %}
-			<a class="btn btn-sm btn-icon btn-clear btn-primary" href="{{ path('app_admin_page_edit', {'id': page.id}) }}">
-				<i class="ki-outline ki-notepad-edit"></i>
-			</a>
-			{% if page.contentType.slug == 'static-page' %} 
-				<a class="btn btn-sm btn-icon btn-clear btn-info" href='{{ path('app_page_static_view', {'slug': page.slug}) }}' target="_blank">
-					<i class="ki-outline ki-eye"></i>
-				</a>
-			{% else %}
-				<a class="btn btn-sm btn-icon btn-clear btn-info" href='{{ path('app_page_view', {contentTypeSlug: page.contentType.slug, 'slug': page.slug}) }}' target="_blank">
-					<i class="ki-outline ki-eye"></i>
-				</a>	
-			{% endif %}
-			{% if action == null %}
-				<form method="post" action="{{ path('app_admin_page_delete', {'id': page.id}) }}">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
-					{% set modalId = 'delete-modal-' ~ page.id %}
-					<button type='button' class="btn btn-sm btn-icon btn-clear btn-danger" data-modal-toggle="#{{ modalId }}">
-						<i class="ki-outline ki-trash"></i>
-					</button>
-					{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "Page"|trans} %}
-				</form>
-			{% endif %}
-		{% endif %}
-	</td>
-	<td class="px-6 py-3">{{ page.id }}</td>
-	<td class="px-6 py-3">{{ page.contentType.name }}</td>
-	<td class="px-6 py-3">{{ page.title }}</td>
-	<td class="px-6 py-3">{{ page.slug }}</td>
 <tr id="page_{{ object.id }}" class='{{ action ? ' action-' ~ action }}'>
 	{% if bulkRemoveAllowed is defined and bulkRemoveAllowed %}
 		<td>
@@ -44,9 +13,15 @@
 				<a class="btn btn-sm btn-outline" href="{{ path('app_admin_page_edit', {'id': object.id}) }}">
 					<i class="i-tabler-edit text-lg"></i>
 				</a>
-				<a class="btn btn-sm btn-info btn-outline" href="{{ path('app_page_view', {'slug': object.slug}) }}" target="_blank">
-					<i class="i-tabler-eye text-lg"></i>
-				</a>
+				{% if object.contentType.slug == 'static-page' %} 
+					<a class="btn btn-sm btn-info btn-outline" href="{{ path('app_page_static_view', {'slug': object.slug}) }}" target="_blank">
+						<i class="i-tabler-eye text-lg"></i>
+					</a>
+				{% else %}
+					<a class="btn btn-sm btn-info btn-outline" href="{{ path('app_page_view', {contentTypeSlug: object.contentType.slug, 'slug': object.slug}) }}" target="_blank">
+						<i class="i-tabler-eye text-lg"></i>
+					</a>
+				{% endif %}
 				{% if action == null %}
 					<form data-action="live#action" data-live-action-param="remove" data-live-entity-ids-param="[{{ object.id }}]" data-live-object-name-param="Page">
 						{% set modalId = 'delete-modal-' ~ object.id %}
@@ -61,11 +36,13 @@
 	</td>
 	<td class="px-6 py-3">{{ object.id }}</td>
 	<td class="px-6 py-3">{{ object.title }}</td>
+	<td class="px-6 py-3">{{ object.contentType.name|trans }}</td>
 	<td class="px-6 py-3">
 		<span class="badge badge-primary">
-			{{ object.category.name }}
+			{{ object.category ? object.category.name : '-' }}
 		</span>
 	</td>
+	<td class="px-6 py-3">{{ object.slug }}</td>
 	<td class="px-6 py-3">
 		{% if object.published %}
 			<span class="badge badge-success">

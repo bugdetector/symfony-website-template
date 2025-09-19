@@ -26,7 +26,8 @@ class DefaultLayoutController extends AbstractController
         $this->initCssFiles();
     }
 
-    public function initJsFiles(){
+    public function initJsFiles()
+    {
         $this->theme->addJavascriptFile("/website-theme/lib/bootstrap/popper.min.js");
         $this->theme->addJavascriptFile("/website-theme/lib/bootstrap/bootstrap.min.js");
         $this->theme->addJavascriptFile("/website-theme/lib/jquery-3.6.0.min.js");
@@ -34,7 +35,8 @@ class DefaultLayoutController extends AbstractController
         $this->theme->addJavascriptFile("/website-theme/assets/js/main.js");
     }
 
-    public function initCssFiles(){
+    public function initCssFiles()
+    {
         $this->theme->addCssFile('/website-theme/lib/bootstrap/bootstrap.5.3.3.min.css');
         $this->theme->addCssFile('/website-theme/lib/swiper/swiper.css');
         $this->theme->addCssFile('/website-theme/lib/glightbox/glightbox.min.css');
@@ -48,10 +50,11 @@ class DefaultLayoutController extends AbstractController
         $this->theme->addCssFile('/website-theme/assets/css/about.css');
     }
 
-    public function initMetatags(?Page $page = null){
+    public function initMetatags(?Page $page = null)
+    {
         /** @var Request */
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        
+
         $appName = $request->server->get('APP_NAME');
         $this->theme->addMetaTag('og:title', [
             'property' => 'og:title',
@@ -65,7 +68,7 @@ class DefaultLayoutController extends AbstractController
             'property' => 'og:url',
             'content' => $request->getUri()
         ]);
-        if($page) {
+        if ($page) {
             $this->theme->addMetaTag('og:title', [
                 'property' => 'og:title',
                 'content' => $page->getTitle()
@@ -84,7 +87,6 @@ class DefaultLayoutController extends AbstractController
                     $page->getCoverImage()?->__toString() ?: '/website-theme/assets/img/placeholder.png'
                 )
             ]);
-            
         }
     }
 }

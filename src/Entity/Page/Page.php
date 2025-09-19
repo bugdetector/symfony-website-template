@@ -35,12 +35,11 @@ class Page implements Translatable
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[ORM\Column(length: 255)]
     #[Gedmo\Translatable(fallback: true)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable(fallback: true)]
     private ?string $body = null;
 
@@ -59,6 +58,7 @@ class Page implements Translatable
     private ?ContentType $contentType = null;
 
     #[ORM\Column(length: 500, nullable: true)]
+    #[Gedmo\Translatable(fallback: true)]
     private ?string $shortDescription = null;
 
     /**
@@ -116,7 +116,7 @@ class Page implements Translatable
     private ?Collection $translations = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
     public function __construct()

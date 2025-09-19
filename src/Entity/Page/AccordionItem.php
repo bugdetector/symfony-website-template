@@ -3,11 +3,15 @@
 namespace App\Entity\Page;
 
 use App\Repository\Page\AccordionItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AccordionItemRepository::class)]
+#[Gedmo\TranslationEntity(class: AccordionItemTranslation::class)]
 class AccordionItem
 {
     use TimestampableEntity;
@@ -22,10 +26,24 @@ class AccordionItem
     private ?Page $page = null;
 
     #[ORM\Column(length: 255)]
+    #[Gedmo\Translatable()]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable()]
     private ?string $body = null;
+
+    #[ORM\OneToMany(mappedBy: 'object', targetEntity: AccordionItemTranslation::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Collection $translations = null;
+
+    #[Gedmo\Locale]
+    private ?string $locale = null;
+
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,5 +84,10 @@ class AccordionItem
         $this->body = $body;
 
         return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

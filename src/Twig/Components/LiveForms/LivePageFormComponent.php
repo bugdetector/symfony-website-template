@@ -15,6 +15,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\LiveComponent\LiveCollectionTrait;
 
 #[AsLiveComponent]
 final class LivePageFormComponent extends AbstractController
@@ -23,6 +24,7 @@ final class LivePageFormComponent extends AbstractController
     use ComponentWithFormTrait;
     use LiveAsyncFileInputTrait;
     use TranslatableFormTrait;
+    use LiveCollectionTrait;
 
     #[LiveProp()]
     public ?Page $initialFormData = null;
