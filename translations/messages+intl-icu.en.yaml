@@ -85,11 +85,11 @@ Body: Body
 'Hi {user}': 'Hi {user}'
 'Edit File: { name }': 'Edit File: { name }'
 'Content Types': 'Content Types'
-contentType.created_successfully: 'Content Type created successfully.'
+'Content Type created successfully.': 'Content Type created successfully.'
 'Add New Content Type': 'Add New Content Type'
-contentType.updated_successfully: 'Content Type updated successfully.'
+'Content Type updated successfully.': 'Content Type updated successfully.'
 'Edit Content Type {name}': 'Edit Content Type {name}'
-contentType.deleted_successfully: 'Content Type deleted successfully.'
+'Content Type deleted successfully.': 'Content Type deleted successfully.'
 Slug: Slug
 'Content Type': 'Content Type'
 Create: Create
