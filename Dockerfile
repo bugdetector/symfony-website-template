@@ -16,13 +16,24 @@ WORKDIR /app
 VOLUME /app/var/
 
 # persistent / runtime deps
+# Install dependencies
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	acl \
 	file \
 	gettext \
 	git \
+	curl \
 	&& rm -rf /var/lib/apt/lists/*
+
+# Install Node.js v22 and npm
+# hadolint ignore=DL3008,DL4006
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+	apt-get install -y nodejs --no-install-recommends && \
+	rm -rf /var/lib/apt/lists/* && \
+	node --version && npm --version
+
+RUN npm install -g yarn@1.22.19
 
 RUN set -eux; \
 	install-php-extensions \
@@ -36,6 +47,7 @@ RUN set -eux; \
 		pdo \
 		pdo_mysql \
 		gd \
+		exif \
 	;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser

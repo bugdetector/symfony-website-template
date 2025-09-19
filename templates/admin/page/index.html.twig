@@ -35,4 +35,18 @@
 	{{ component('PagesSearchComponent', {listTopic: 'pages'}) }}
 
 	{% include "admin/page/create_page_modal.twig" with {modalId: 'create-page-modal'} %}
+	<a href='{{ path('app_admin_page_new') }}' class="btn btn-outline">
+		<i class="i-tabler-plus text-lg"></i>
+		{% trans %}Add New Page{% endtrans %}
+	</a>
+	{% if page is defined and page.id %}
+		<a href='{{ path('app_page_view', {'slug': page.slug}) }}' data-turbo="false" class="btn btn-info btn-outline">
+			<i class="i-tabler-eye text-lg"></i>
+			{% trans %}View Page{% endtrans %}
+		</a>
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	{{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy', entityClass: 'App\\Entity\\Page\\Page', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
 {% endblock %}

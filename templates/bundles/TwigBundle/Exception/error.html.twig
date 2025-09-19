@@ -1,13 +1,15 @@
 {% set title = status_text|trans %}
 {% extends '@website-theme/base.html.twig' %}
 
-{% block main %}
-    <div class="py-8 px-4 mx-auto pt-5">
-        <div class="mx-auto max-w-screen-sm text-center">
-            <h1 class="mb-4 fs-1 fw-bolder">{{ status_code }}</h1>
-            <p class="mb-4 fs-3 fw-bold">{{ status_text|trans }}</p>
-            <p class="mb-4 fs-4">{% trans %}Sorry, an unknown error occured.{% endtrans %}</p>
-            <a href="{{ path('homepage') }}" class="btn btn-secondary btn-footer">{% trans %}Back to Homepage{% endtrans %}</a>
-        </div>   
+{% block body %}
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex flex-col items-center text-center">
+            <div class="max-w-md">
+                <h1 class="text-8xl font-extrabold text-primary mb-4">{{ status_code }}</h1>
+                <p class="text-3xl font-bold mb-2">{{ status_text|trans }}</p>
+                <p class="mb-6 text-lg text-base-content/70">{% trans %}Sorry, an unknown error occured.{% endtrans %}</p>
+                <a href="{{ path('homepage') }}" class="btn btn-primary btn-wide">{% trans %}Back to Homepage{% endtrans %}</a>
+            </div>
+        </div>
     </div>
 {% endblock %}
