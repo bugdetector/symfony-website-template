@@ -20,7 +20,7 @@
     {{ form_start(form, {'attr': {'class': 'py-4'}}) }}
     {{ form_widget(form) }}
     <div class="modal-action">
-        <button type="submit" class="btn btn-success btn-soft hover:text-base-100">
+        <button type="submit" class="btn btn-success btn-soft hover:text-base-100" data-loading="addAttribute(disabled)">
             <i class="i-tabler-check text-xl"></i>
             {% trans %}Save{% endtrans %}
         </button>
