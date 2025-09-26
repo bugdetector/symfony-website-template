@@ -1,0 +1,181 @@
+<div class="drawer flex">
+	<input id="main-drawer" type="checkbox" class="drawer-toggle"/>
+	<div
+		class="navbar bg-base-200 shadow-md flex items-center justify-between">
+		<!-- Logo and brand left -->
+		<div class="flex items-center gap-2">
+			<a class="btn btn-ghost text-xl flex items-center gap-2 p-0" href="/">
+				<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+				<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+				{% block app_name %}
+					<h2>{{ app_name }}</h2>
+				{% endblock %}
+			</a>
+		</div>
+		<!-- Desktop menu right -->
+		<div class="hidden md:flex ml-auto items-center gap-2">
+			{% for item in menuItems() %}
+				{% if item.children.count == 0 %}
+					<div class="dropdown">
+						<a tabindex="0" href="{{ item.url }}" class="btn btn-ghost rounded-btn text-base font-normal px-4">{{ item.name }}</a>
+					</div>
+				{% else %}
+					<div class="dropdown dropdown-hover">
+						<label tabindex="0" class="btn btn-ghost rounded-btn text-base font-normal flex items-center gap-1 cursor-pointer">
+							{{ item.name }}
+							<i class="i-tabler-chevron-down"></i>
+						</label>
+						<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+							{% for subItem in item.children %}
+								<li>
+									<a href="{{ subItem.url }}" class="link link-hover text-base">{{ subItem.name }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="dropdown dropdown-end">
+			<div tabindex="0" role="button" class="btn btn-ghost">
+				<div class="avatar">
+					<div class="w-8 rounded-full">
+						{% if app.user and app.user.profilePhoto %}
+							<img alt="{{ app.user.name }}" src="{{ upload_asset(app.user.profilePhoto.filePath) }}"/>
+						{% else %}
+							<span class='i-tabler-user text-3xl'></span>
+						{% endif %}
+					</div>
+				</div>
+				<span class="font-medium min-w-24 text-wrap">{{ app.user ? app.user.name : 'Account'|trans }}</span>
+				<span class="i-tabler-chevron-down text-lg"></span>
+			</div>
+			<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+				{% if app.user %}
+					<li>
+						<a href="{{ path('app_profile') }}" data-turbo-frame="base-content">{% trans %}Profile{% endtrans %}</a>
+					</li>
+				{% endif %}
+				<li>
+					<button popovertarget="nav-theme-popover" style="anchor-name:--anchor-nav-theme-popover">
+						<span>{% trans %}Theme{% endtrans %}</span>
+						<span class="i-tabler-chevron-right text-lg ms-auto"></span>
+					</button>
+					<ul class="dropdown dropdown-content menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-theme-popover" style="position-anchor:--anchor-nav-theme-popover">
+						<li>
+							<label class="flex items-center gap-2 cursor-pointer">
+								<input type="radio" name="theme" value="light" class="radio radio-sm"/>
+								<span>{% trans %}Light{% endtrans %}</span>
+							</label>
+						</li>
+						<li>
+							<label class="flex items-center gap-2 cursor-pointer">
+								<input type="radio" name="theme" value="dark" class="radio radio-sm"/>
+								<span>{% trans %}Dark{% endtrans %}</span>
+							</label>
+						</li>
+						<li>
+							<label class="flex items-center gap-2 cursor-pointer">
+								<input type="radio" name="theme" value="system" class="radio radio-sm"/>
+								<span>{% trans %}System{% endtrans %}</span>
+							</label>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<button popovertarget="nav-language-popover" style="anchor-name:--anchor-nav-language-popover">
+						<span>{% trans %}Language{% endtrans %}</span>
+						<div class="badge badge-outline badge-primary">
+							{{ app.request.locale|upper }}
+						</div>
+						<span class="i-tabler-chevron-right text-lg ms-auto"></span>
+					</button>
+					<ul class="dropdown dropdown-content menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-language-popover" style="position-anchor:--anchor-nav-language-popover">
+						{% for locale in locales() %}
+							{% set is_active = app.request.locale == locale.code %}
+							{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
+							<li>
+								<a class="flex justify-around" translate="no" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="?_locale={{ locale.code }}" data-turbo="false">
+									{% if is_active %}
+										<div class="indicator">
+											<span class="indicator-item status status-success"></span>
+											<div class="badge badge-outline badge-primary">
+												{{ locale.code|upper }}
+												-
+												{{ locale.name }}
+											</div>
+										</div>
+									{% else %}
+										<div class="badge badge-outline badge-primary">
+											{{ locale.code|upper }}
+											-
+											{{ locale.name }}
+										</div>
+									{% endif %}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% if app.user %}
+					<li>
+						<a class="text-primary" href="{{ is_granted('IS_IMPERSONATOR') ? impersonation_exit_path(path('homepage')) : path('app_logout') }}" data-turbo="false">
+							{% trans %}Logout{% endtrans %}
+						</a>
+					</li>
+				{% else %}
+					<li>
+						<a class="text-primary" href="{{ path('app_login') }}" data-turbo="false">
+							{% trans %}Login{% endtrans %}
+						</a>
+					</li>
+					<li>
+						<a class="text-primary" href="{{ path('app_register') }}" data-turbo="false">
+							{% trans %}Register{% endtrans %}
+						</a>
+					</li>
+				{% endif %}
+
+			</ul>
+		</div>
+		<!-- Mobile menu button right -->
+		<div class="md:hidden ml-auto">
+			<label for="main-drawer" class="btn btn-ghost btn-circle">
+				<i class="i-tabler-menu-2 text-3xl"></i>
+			</label>
+		</div>
+	</div>
+	<!-- Drawer content for mobile -->
+	<div class="drawer-side z-50">
+		<label for="main-drawer" class="drawer-overlay"></label>
+		<ul class="menu p-4 w-64 min-h-full bg-base-100 text-base-content">
+			<li class="mb-2">
+				<a class="btn btn-ghost text-xl flex items-center gap-2 p-0" href="/">
+					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+					<span class="ml-2">{{ app_name }}</span>
+				</a>
+			</li>
+			{% for item in menuItems() %}
+				{% if item.children.count == 0 %}
+					<li>
+						<a href="{{ item.url }}" class="link link-hover text-base">{{ item.name }}</a>
+					</li>
+				{% else %}
+					<li tabindex="0">
+						<details>
+							<summary class="text-base">{{ item.name }}</summary>
+							<ul>
+								{% for subItem in item.children %}
+									<li>
+										<a href="{{ subItem.url }}" class="link link-hover text-base">{{ subItem.name }}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</details>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+</div>

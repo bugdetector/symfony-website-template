@@ -1,116 +1,69 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class='{{ page.slug != 'home' ? 'pt-5' }}'>
-		{% if page.slug == 'home' %}
-			<section class="slider">
-				<div class="container-lg">
-					<div class="slider-bg mb-5">
-						<div class="slider-head">
-							<div class="slider-text">
-								<div class="slider-text-head">
-									<h1>SOFTWARE DESIGN AND DEVELOPMENT PARTNER</h1>
-									<p>Welcome to Ai Web Solutions Ltd, your CMS, CRM, and Integration Specialists.</p>
-								</div>
-								<div class="slider-text-btn gap-x-5 ">
-									<a class="btn btn-orange" href="#contact-form">Let’s discuss your project</a>
-									<a class="btn btn-tra" href="#contact-form">What WE do</a>
-								</div>
-							</div>
-							<div class="swiper swiper-home col-lg-6 col-12" data-slides-per-view="1" data-space-between="0" data-centered-slides="true" data-navigation='{"nextEl":".blog-btn-next","prevEl": ".blog-btn-prev"}' data-autoplay='{"delay":2000}' data-speed="1000" data-loop="true">
-								<div class="swiper-wrapper">
-									{% for slider in page.sliderItems %}
-										<div class="swiper-slide w-fuk">
-											<div class="blog-slider-bg">
-												<div class="blog-slider-img">
-													<img class="img-fluid slider-img w-100" alt="{{ slider.title }}" src="{{ upload_asset(slider.sliderImage.filePath) }}">
-												</div>
-												<div class="blog-slider-item">
-													<div class="blog-slider-head">
-														<h1>{{ slider.title }}</h1>
-													</div>
-													<div class="blog-slider-flex">
-														<div class="blog-slider-left">
-															<a class="blog-slider-link" href="{{ slider.url }}">More</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									{% endfor %}
-								</div>
-								<div class="blog-swiper-btn">
-									<button class="blog-btn-prev">
-										<svg data-v-f3438552="" width="19" height="16" viewbox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path data-v-f3438552="" d="M0.292892 7.29289C-0.0976315 7.68342 -0.0976314 8.31658 0.292893 8.70711L6.65686 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928933C7.68054 0.538409 7.04738 0.538409 6.65685 0.928933L0.292892 7.29289ZM19 7L1 7L1 9L19 9L19 7Z" fill="black"></path>
-										</svg>
-									</button>
-									<button class="blog-btn-next">
-										<svg data-v-f3438552="" width="19" height="16" viewbox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path data-v-f3438552="" d="M0.292892 7.29289C-0.0976315 7.68342 -0.0976314 8.31658 0.292893 8.70711L6.65686 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928933C7.68054 0.538409 7.04738 0.538409 6.65685 0.928933L0.292892 7.29289ZM19 7L1 7L1 9L19 9L19 7Z" fill="black"></path>
-										</svg>
-									</button>
-								</div>
+	<div
+		class="page-content-type-{{ page.contentType.slug }} page-{{ page.slug }}">
+		{# Slider Section #}
+		{% if page.sliderItems|length > 0 %}
+			<div class="swiper" data-controller="swiper" data-slides-per-view="1" data-speed="1000" data-loop="true" data-autoplay='{"delay":3000}' data-space-between="20" data-navigation='{"nextEl":"#page-slider-next", "prevEl":"#page-slider-prev"}' data-pagination='{"el":".swiper-pagination",  "clickable":true}'>
+				<div class="swiper-wrapper">
+					{% for slider in page.sliderItems %}
+						<div class="swiper-slide relative overflow-hidden">
+							<img class="w-full object-cover max-h-[500px]" alt="{{ slider.title }}" src="{{ upload_asset(slider.sliderImage.filePath) }}"/>
+							<a href="{{ slider.url }}" class="absolute inset-0 z-10" tabindex="-1" aria-label="{{ slider.title }}"></a>
+							<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-base-200/80 to-transparent p-6 flex flex-col gap-2 z-20 pointer-events-none">
+								<h1 class="text-2xl font-bold text-base-100">{{ slider.title }}</h1>
+								<span class="btn btn-primary btn-sm w-max pointer-events-auto relative z-30">{% trans %}Details{% endtrans %}</span>
 							</div>
 						</div>
-					</div>
+					{% endfor %}
 				</div>
-			</section>
-		{% else %}
-			{% if page.sliderItems.count > 0 %}
-				<section class="blog-slider mb-3">
-					<div class="container-lg">
-						<div class="swiper swiper-container" data-slides-per-view="1" data-space-between="0" data-centered-slides="true" data-navigation='{"nextEl":".blog-btn-next","prevEl": ".blog-btn-prev"}' data-autoplay='{"delay":2000}' data-speed="1000" data-loop="true">
-							<div class="swiper-wrapper">
-								{% for slider in page.sliderItems %}
-									<div class="swiper-slide">
-										<div class="blog-slider-bg">
-											<div class="blog-slider-img">
-												<img class="img-fluid" alt="{{ slider.title }}" src="{{ upload_asset(slider.sliderImage.filePath) }}">
-											</div>
-											<div class="blog-slider-item">
-												<div class="blog-slider-head">
-													<h1>{{ slider.title }}</h1>
-												</div>
-												{% if slider.url %}
-													<div class="blog-slider-flex">
-														<div class="blog-slider-left">
-															<a class="blog-slider-link" href="{{ slider.url }}">DAHA FAZLA</a>
-														</div>
-													</div>
-												{% endif %}
-											</div>
-										</div>
-									</div>
-								{% endfor %}
-							</div>
-							<div class="blog-swiper-btn">
-								<button class="blog-btn-prev">
-									<svg data-v-f3438552="" width="19" height="16" viewbox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path data-v-f3438552="" d="M0.292892 7.29289C-0.0976315 7.68342 -0.0976314 8.31658 0.292893 8.70711L6.65686 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928933C7.68054 0.538409 7.04738 0.538409 6.65685 0.928933L0.292892 7.29289ZM19 7L1 7L1 9L19 9L19 7Z" fill="black"></path>
-									</svg>
-								</button>
-								<button class="blog-btn-next">
-									<svg data-v-f3438552="" width="19" height="16" viewbox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path data-v-f3438552="" d="M0.292892 7.29289C-0.0976315 7.68342 -0.0976314 8.31658 0.292893 8.70711L6.65686 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928933C7.68054 0.538409 7.04738 0.538409 6.65685 0.928933L0.292892 7.29289ZM19 7L1 7L1 9L19 9L19 7Z" fill="black"></path>
-									</svg>
-								</button>
+				<div class="swiper-pagination" style="--swiper-pagination-color: var(--color-white); --swiper-pagination-bullet-inactive-color: var(--color-gray-300)"></div>
+				<!-- Navigation Buttons -->
+				<div class="absolute inset-y-0 z-10 left-0 flex items-center">
+					<button id="page-slider-prev" class="btn btn-circle btn-light !bg-white !dark:bg-gray-800 ms-2">
+						<i class="i-tabler-arrow-left text-light text-2xl"></i>
+					</button>
+				</div>
+				<div class="absolute inset-y-0 z-10 right-0 flex items-center">
+					<button id="page-slider-next" class="btn btn-circle btn-light !bg-white !dark:bg-gray-800 me-2">
+						<i class="i-tabler-arrow-right text-light text-2xl"></i>
+					</button>
+				</div>
+			</div>
+		{% endif %}
+
+		{# Box Items Section #}
+		{% if page.boxItems.count > 0 %}
+			<div class="flex flex-wrap justify-center gap-6 mb-8">
+				{% for box in page.boxItems %}
+					<div class="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 p-2">
+						<div class="card bg-base-200 shadow-xl h-full">
+							<figure class="h-32 overflow-hidden"><img class="object-cover w-full h-full" src="{{ box.image ? upload_asset(box.image.filePath) : '/assets/logo.png' }}" alt="{{ box.title }}"/></figure>
+							<div class="card-body p-4 flex flex-col justify-end">
+								<a href="{{ box.url }}" class="card-title text-lg hover:underline after:absolute after:inset-0">{{ box.title }}</a>
 							</div>
 						</div>
 					</div>
-				</section>
-			{% endif %}
+				{% endfor %}
+			</div>
 		{% endif %}
-		{% if page.boxItems.count > 0 %}
-			<div class="container">
-				<div class="d-flex flex-wrap justify-content-center">
-					{% for box in page.boxItems %}
-						<div class="col-md-2 col-12 p-3">
-							<div class="card bg-dark text-white mt-3 h-100">
-								<img class="card-img w-100 h-100 object-cover" src="{{ box.image ? upload_asset(box.image.filePath) : "/assets/logo.png" }}" alt="{{ box.title }}">
-								<div class="card-img-overlay" style="top: unset;">
-									<a href="{{ box.url }}" class="card-title text-decoration-none">{{ box.title }}</a>
-								</div>
+
+		<div class="max-w-3xl mx-auto my-8 card bg-base-100 shadow p-6 prose prose-base md:prose-lg">
+			{{ include(template_from_string(page.body ?? '')) }}
+		</div>
+
+		{# Accordion Section #}
+		{% if page.accordionItems|length > 0 %}
+			<div class="max-w-2xl mx-auto mb-8">
+				<div class="join join-vertical w-full">
+					{% set accordionGroup = 'page-accordion-' ~ random() %}
+					{% for index, accordion in page.accordionItems %}
+						<div class="collapse collapse-arrow join-item border border-base-300">
+							<input type="radio" name="{{ accordionGroup }}" class="collapse-toggle" {% if index == 0 %} checked="checked" {% endif %}/>
+							<div class="collapse-title text-lg font-medium">{{ accordion.title }}</div>
+							<div class="collapse-content">
+								{{ accordion.body|raw }}
 							</div>
 						</div>
 					{% endfor %}
@@ -118,39 +71,19 @@
 			</div>
 		{% endif %}
 
-		{{ include(template_from_string(page.body ?? '')) }}
-		{% if page.accordionItems.count > 0 %}
-			<div class="container mb-3">
-				<div class="accordion" id="page-accordion">
-					{% for index, accordion in page.accordionItems %}
-						<div class="accordion-item">
-							<h2 class="accordion-header">
-								<button class="accordion-button {{ index != 0 ? 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-{{ index }}">
-									{{ accordion.title }}
-								</button>
-							</h2>
-							<div id="accordion-{{ index }}" class="accordion-collapse collapse {{ index == 0 ? 'show' }}" data-bs-parent="#page-accordion">
-								<div class="accordion-body visible">
-									{{ accordion.body|raw }}
-								</div>
-							</div>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-		{% endif %}
+		{# Gallery Section #}
 		{% if page.galleryItems.count > 0 %}
-			<div class='container'>
-				<div class='row'>
-					{% for file in page.galleryItems %}
-						<div class='col-lg-3 col-md-4 col-sm-6 mb-3'>
-							<a href="{{ upload_asset(file.filePath) }}" class="glightbox">
-								<img src="{{ upload_asset(file.filePath) }}" class="img-fluid" alt="{{ file.fileName }}">
-							</a>
-						</div>
-					{% endfor %}
-				</div>
+			<div class="flex flex-wrap justify-center gap-6 mb-8">
+				{% for file in page.galleryItems %}
+					<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
+						<a href="{{ upload_asset(file.filePath) }}" class="block glightbox">
+							<img src="{{ upload_asset(file.filePath) }}" class="rounded-box w-full h-48 object-cover" alt="{{ file.fileName }}"/>
+						</a>
+					</div>
+				{% endfor %}
 			</div>
 		{% endif %}
 	</div>
+
+	{{ component('website-contact-form') }}
 {% endblock %}

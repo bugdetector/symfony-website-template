@@ -189,3 +189,7 @@ Menus: Menüler
 'Add New Menu': 'Yeni menü ekle'
 'Edit Menu: {name}': 'Menüyü düzenle: {name}'
 Parent: Üst
+'Contact us': 'Bize Ulaşın'
+'Have a question? Fill out the form below and we’ll get back to you as soon as possible.': 'Bir sorunuz mu var? Aşağıdaki formu doldurun, en kısa sürede size geri dönüş yapacağız.'
+'By submitting this form, I consent to the use of my personal data as described in the privacy policy.': 'Bu formu göndererek, kişisel verilerimin gizlilik politikasında açıklandığı şekilde kullanılmasına onay veriyorum.'
+'Send Message': 'Mesaj Gönder'

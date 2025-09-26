@@ -28,26 +28,10 @@ class DefaultLayoutController extends AbstractController
 
     public function initJsFiles()
     {
-        $this->theme->addJavascriptFile("/website-theme/lib/bootstrap/popper.min.js");
-        $this->theme->addJavascriptFile("/website-theme/lib/bootstrap/bootstrap.min.js");
-        $this->theme->addJavascriptFile("/website-theme/lib/jquery-3.6.0.min.js");
-        $this->theme->addJavascriptFile("/website-theme/lib/swiper/swiper-bundle.min.js");
-        $this->theme->addJavascriptFile("/website-theme/assets/js/main.js");
     }
 
     public function initCssFiles()
     {
-        $this->theme->addCssFile('/website-theme/lib/bootstrap/bootstrap.5.3.3.min.css');
-        $this->theme->addCssFile('/website-theme/lib/swiper/swiper.css');
-        $this->theme->addCssFile('/website-theme/lib/glightbox/glightbox.min.css');
-        $this->theme->addCssFile('/website-theme/assets/css/style.css');
-        $this->theme->addCssFile('/website-theme/assets/css/main.css');
-        $this->theme->addCssFile('/website-theme/assets/css/header.css');
-        $this->theme->addCssFile('/website-theme/assets/css/slider.css');
-        $this->theme->addCssFile('/website-theme/assets/css/timeline.css');
-        $this->theme->addCssFile('/website-theme/assets/css/project.css');
-        $this->theme->addCssFile('/website-theme/assets/css/blog.css');
-        $this->theme->addCssFile('/website-theme/assets/css/about.css');
     }
 
     public function initMetatags(?Page $page = null)

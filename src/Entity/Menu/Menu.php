@@ -46,6 +46,7 @@ class Menu
     public function __construct()
     {
         $this->translations = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
