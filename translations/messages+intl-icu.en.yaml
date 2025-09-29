@@ -167,7 +167,10 @@ Menus: Menus
 'Add New Menu': 'Add New Menu'
 'Edit Menu: {name}': 'Edit Menu: {name}'
 Parent: Parent
-'Contact us': '__Contact us'
+'Contact us': 'Contact us'
 'Have a question? Fill out the form below and we’ll get back to you as soon as possible.': 'Have a question? Fill out the form below and we’ll get back to you as soon as possible.'
 'By submitting this form, I consent to the use of my personal data as described in the privacy policy.': 'By submitting this form, I consent to the use of my personal data as described in the privacy policy.'
 'Send Message': 'Send Message'
+'Category created successfully.': 'Category created successfully.'
+'Category updated successfully.': 'Category updated successfully.'
+'Category deleted successfully.': 'Category deleted successfully.'
