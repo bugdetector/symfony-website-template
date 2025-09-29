@@ -4,10 +4,14 @@ namespace App\Entity\Page;
 
 use App\Entity\File\File;
 use App\Repository\Page\SliderItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: SliderItemRepository::class)]
+#[Gedmo\TranslationEntity(class: SliderItemTranslation::class)]
 class SliderItem
 {
     use TimestampableEntity;
@@ -18,6 +22,7 @@ class SliderItem
     private ?int $id = null;
 
     #[ORM\Column(length: 500)]
+    #[Gedmo\Translatable(fallback: true)]
     private ?string $title = null;
 
     #[ORM\ManyToOne]
@@ -30,6 +35,18 @@ class SliderItem
     #[ORM\ManyToOne(inversedBy: 'sliderItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Page $page = null;
+
+    #[ORM\OneToMany(mappedBy: 'object', targetEntity: SliderItemTranslation::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Collection $translations = null;
+
+    #[Gedmo\Locale]
+    private ?string $locale = null;
+
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -82,5 +99,10 @@ class SliderItem
         $this->page = $page;
 
         return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

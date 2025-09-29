@@ -3,6 +3,7 @@
 namespace App\Entity\Page;
 
 use App\Entity\ContentType;
+use App\Entity\Category\Category;
 use App\Entity\File\File;
 use App\Repository\Page\PageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,8 +11,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
-use Gedmo\Mapping\Annotation\Slug;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Translatable\Translatable;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\All;
@@ -22,7 +24,8 @@ use Symfony\Component\Validator\Constraints\Image;
     topics: ['pages'],
     private: true
 )]
-class Page
+#[Gedmo\TranslationEntity(class: PageTranslation::class)]
+class Page implements Translatable
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -32,14 +35,16 @@ class Page
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 500)]
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Translatable(fallback: true)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable(fallback: true)]
     private ?string $body = null;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
-    #[Slug(fields:['title'])]
+    #[Gedmo\Slug(fields:['title'])]
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: File::class)]
@@ -53,6 +58,7 @@ class Page
     private ?ContentType $contentType = null;
 
     #[ORM\Column(length: 500, nullable: true)]
+    #[Gedmo\Translatable(fallback: true)]
     private ?string $shortDescription = null;
 
     /**
@@ -102,6 +108,17 @@ class Page
     )]
     private Collection $boxItems;
 
+    #[Gedmo\Locale]
+    private ?string $locale = null;
+
+    #[ORM\OneToMany(mappedBy: 'object', targetEntity: PageTranslation::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Collection $translations = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->attachments = new ArrayCollection();
@@ -110,6 +127,7 @@ class Page
         $this->accordionItems = new ArrayCollection();
         $this->sliderItems = new ArrayCollection();
         $this->boxItems = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -365,6 +383,27 @@ class Page
                 $boxItem->setPage(null);
             }
         }
+        return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

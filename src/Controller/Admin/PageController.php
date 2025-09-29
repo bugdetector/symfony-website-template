@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\ContentType;
 use App\Entity\Page\Page;
-use App\Form\Page\PageType;
 use App\Repository\ContentTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,8 +30,9 @@ class PageController extends AbstractController
             ])
             ->add("contentType", EntityType::class, [
                 'class' => ContentType::class,
-                'choice_label' => 'name',
-                'autocomplete' => true,
+                'choice_label' => function (ContentType $contentType) {
+                    return $this->translator->trans($contentType->getName());
+                },
                 'placeholder' => 'Select content type'
             ])
             ->setAction($this->generateUrl("app_admin_page_new"))
@@ -43,11 +43,11 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_page_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_admin_page_new', methods: ['POST'])]
     public function new(
         Request $request,
-        EntityManagerInterface $entityManager,
         ContentTypeRepository $contentTypeRepository,
+        EntityManagerInterface $entityManager,
     ): Response {
         if ($this->isCsrfTokenValid('new', $request->request->get('_token'))) {
             $page = new Page();
@@ -57,37 +57,20 @@ class PageController extends AbstractController
             );
             $entityManager->persist($page);
             $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('page.created_successfully'));
+            $this->addFlash('success', $this->translator->trans('Page created successfully.'));
             return $this->redirectToRoute('app_admin_page_edit', [
                 'id' => $page->getId(),
             ], Response::HTTP_SEE_OTHER);
         }
+        return $this->redirectToRoute('app_admin_page_index');
     }
 
-    #[Route('/{id}/edit/{tab}', name: 'app_admin_page_edit', methods: ['GET', 'POST'], defaults: ['tab' => 'general'])]
-    public function edit(
-        Request $request,
-        Page $page,
-        EntityManagerInterface $entityManager,
-        ?string $tab = 'general'
-    ): Response {
-        $form = $this->createForm(PageType::class, $page);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('page.updated_successfully'));
-            return $this->redirectToRoute('app_admin_page_edit', [
-                'id' => $page->getId(),
-                'tab' => $tab,
-            ], Response::HTTP_SEE_OTHER);
-        }
-
+    #[Route('/{id}/edit', name: 'app_admin_page_edit', methods: ['GET'])]
+    public function edit(Page $page): Response
+    {
         return $this->render('admin/page/edit.html.twig', [
             'title' => $this->translator->trans('Edit Page {title}', ['title' => $page->getTitle()]),
             'page' => $page,
-            'form' => $form,
-            'tab' => $tab,
         ]);
     }
 
@@ -97,7 +80,7 @@ class PageController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $page->getId(), $request->request->get('_token'))) {
             $entityManager->remove($page);
             $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('page.deleted_successfully'));
+            $this->addFlash('success', $this->translator->trans('Page deleted successfully.'));
         }
 
         return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);

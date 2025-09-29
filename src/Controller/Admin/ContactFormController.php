@@ -28,23 +28,11 @@ class ContactFormController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_contact_form_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, ContactForm $contactForm, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_admin_contact_form_edit', methods: ['GET'])]
+    public function edit(ContactForm $contactForm): Response
     {
-        $form = $this->createForm(ContactFormAdminType::class, $contactForm);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            $this->addFlash(
-                'success',
-                $this->translator->trans('Contact form saved successfully')
-            );
-        }
-
         return $this->render('admin/contact_form/edit.html.twig', [
             'contact_form' => $contactForm,
-            'form' => $form,
             'title' => $this->translator->trans('Edit Contact {name}', ['{name}' => $contactForm->getName()]),
         ]);
     }

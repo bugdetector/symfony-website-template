@@ -1,31 +1,21 @@
-{% extends 'admin/contact_form/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block backLink %}
-	<div class="flex items-center mx-3 flex-wrap gap-1 lg:gap-5">
-		<a href="{{ path('app_admin_contact_form_index') }}" class="btn btn-light">
-			<i class="ki-filled ki-left"></i>
-			{% trans %}Back{% endtrans %}
-		</a>
-	</div>
+	<a href="{{ path('app_admin_contact_form_index') }}" class="btn btn-outline">
+		<i class="i-tabler-chevron-left"></i>
+		{% trans %}Back{% endtrans %}
+	</a>
 {% endblock %}
 
 {% block body %}
-	<div class="flex flex-wrap">
-		<div class="md:w-9/12 w-full">
-			<div class='mb-3'>
-				<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
-				<div>{{ contact_form.createdAt|format_datetime('full', 'short') }}</div>
-			</div>
-			<div class='mb-3'>
-				<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
-				<div>{{ contact_form.updatedAt|format_datetime('full', 'short') }}</div>
-			</div>				
-			{{ include('admin/contact_form/_form.html.twig') }}
-		</div>
-		<div class="md:w-3/12 w-full">
-			<div class='md:p-3 p-0'>
-				{{ include('admin/contact_form/_delete_form.html.twig') }}
-			</div>
-		</div>
-	</div>
+    <div class="flex flex-wrap">
+        <div class="md:w-9/12 w-full">
+            {{ component('LiveContactFormComponent', {initialFormData: contact_form}) }}
+        </div>
+        <div class="md:w-3/12 w-full">
+            <div class='md:p-3 p-0'>
+                {{ include('admin/contact_form/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

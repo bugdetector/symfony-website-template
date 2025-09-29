@@ -1,0 +1,43 @@
+{% set action = action is defined ? action : null %}
+<tr id="contact_form_{{ object.id }}" class="{{ action ? 'action-' ~ action : '' }}">
+	{% if bulkRemoveAllowed is defined and bulkRemoveAllowed %}
+		<td>
+			<input type="checkbox" data-model="bulkSelectIds[]" value="{{ object.id }}" {{ object.id in this.bulkSelectIds ? 'checked' }} class="toggle toggle-primary mr-2 select-all"/>
+		</td>
+	{% else %}
+		<td></td>
+	{% endif %}
+    <td class="p-3">
+        <div class="flex gap-2">
+            {% if action != 'remove' %}
+                <a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_contact_form_edit', {'id': object.id}) }}">
+                    <i class="i-tabler-edit text-lg"></i>
+                </a>
+                {% if action == null %}
+                    <form method="post" action="{{ path('app_admin_contact_form_delete', {'id': object.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ object.id) }}">
+                        {% set modalId = 'delete-modal-' ~ object.id %}
+                        <button type='button' class="btn btn-sm btn-error btn-outline" role='button' data-modal-toggle="#{{ modalId }}">
+                            <i class="i-tabler-trash text-lg"></i>
+                        </button>
+                        {% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "Contact Form"|trans} %}
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </td>
+    <td class="p-3">{{ object.id }}</td>
+    <td class="p-3">{{ object.name }}</td>
+    <td class="p-3">
+        <a href="mailto:{{ object.email }}" class="link link-primary">{{ object.email }}</a>
+    </td>
+    <td class="p-3">
+        <a href="tel:{{ object.phone }}" class="link link-secondary">{{ object.phone }}</a>
+    </td>
+    <td class="p-3 text-nowrap">
+        <time class="text-sm opacity-75">{{ object.createdAt|format_datetime() }}</time>
+    </td>
+    <td class="p-3 text-nowrap">
+        <time class="text-sm opacity-75">{{ object.updatedAt|format_datetime() }}</time>
+    </td>
+</tr>

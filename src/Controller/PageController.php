@@ -17,7 +17,7 @@ class PageController extends DefaultLayoutController
         $page = $pageRepository->findOneBy([
             "slug" => "home"
         ]);
-        if(!$page){
+        if (!$page) {
             throw $this->createNotFoundException();
         }
         if (!($page->isPublished())) {

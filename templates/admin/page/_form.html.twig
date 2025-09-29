@@ -1,28 +1,76 @@
-{% set tab = tab is defined and tab ? tab : 'general' %}
+{% set page = initialFormData %}
+{% set page = initialFormData %}
+{% if page.id %}
+	{% if page.id %}
+		<div class="tabs tabs-box tabs-lg">
+			{% for localeObj in locales() %}
+				{% set is_active = (this.locale ?: this.defaultLocale) == localeObj.code %}
+				{% set is_rtl = localeObj.code in ['ar', 'fa', 'he'] %}
+				<input type="radio" data-model="locale" class="tab {{ is_active ? 'tab-active' : '' }}" value="{{ localeObj.code }}" aria-label="{{ localeObj.name|default(localeObj.code) }}" />
+			{% endfor %}
+		</div>
+	{% endif %}
+	<div class='mb-3'>
+		<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
+		<div>{{ page.createdAt|format_datetime('full', 'short') }}</div>
+	</div>
+	<div class='mb-3'>
+		<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
+		<div>{{ page.updatedAt|format_datetime('full', 'short') }}</div>
+	</div>
+{% else %}
+	<div class="tabs tabs-box tabs-lg">
+		{% set localeObj = locales()[this.defaultLocale] %}
+		{% set is_active = (this.locale ?: this.defaultLocale) == localeObj.code %}
+		{% set is_rtl = localeObj.code in ['ar', 'fa', 'he'] %}
+		<input type="radio" data-model="locale" class="tab {{ is_active ? 'tab-active' : '' }}" value="{{ localeObj.code }}" aria-label="{{ localeObj.name|default(localeObj.code) }}" />
+	</div>
+{% endif %}
+
 {{ form_start(form) }}
 {{ form_errors(form) }}
-<div class="{{ tab != 'general' ? 'hidden' }}" id="general">
-	{{ form_row(form.title) }}
-	{{ form_row(form.shortDescription) }}
-	{{ form_row(form.slug) }}
-	{{ form_row(form.contentType) }}
-	{{ form_row(form.coverImage) }}
-	{{ form.sliderItems is defined ? form_row(form.sliderItems) }}
-	{{ form.boxItems is defined ? form_row(form.boxItems) }}
-	{{ form.body is defined ? form_row(form.body) }}
-	{{ form.attachments is defined ? form_row(form.attachments) }}
-	{{ form.accordionItems is defined ? form_row(form.accordionItems) }}
-	{{ form_row(form.galleryItems) }}
+
+<div role="tablist" class="tabs tabs-box">
+	<input type="radio" name="page_tabs" role="tab" class="tab" aria-label="{% trans %}General{% endtrans %}" checked />
+	<div role="tabpanel" class="tab-content p-6">
+		{{ form_row(form.title) }}
+		{{ form_row(form.shortDescription) }}
+		{{ form_row(form.slug) }}
+		{{ form_row(form.contentType) }}
+		{{ form_row(form.category) }}
+		{{ form_row(form.coverImage) }}
+		{% if form.sliderItems is defined %}
+			{{ form_row(form.sliderItems) }}
+		{% endif %}
+		{% if form.boxItems is defined %}
+			{{ form_row(form.boxItems) }}
+		{% endif %}
+		{% if form.body is defined %}
+			{{ form_row(form.body) }}
+		{% endif %}
+		{% if form.attachments is defined %}
+			{{ form_row(form.attachments) }}
+		{% endif %}
+		{% if form.accordionItems is defined %}
+			{{ form_row(form.accordionItems) }}
+		{% endif %}
+		{{ form_row(form.galleryItems) }}
+	</div>
+
+	<input type="radio" name="page_tabs" role="tab" class="tab" aria-label="{% trans %}Settings{% endtrans %}" />
+	<div role="tabpanel" class="tab-content p-6">
+		{{ form_row(form.published) }}
+	</div>
+
+	<input type="radio" name="page_tabs" role="tab" class="tab" aria-label="{% trans %}Url Redirections{% endtrans %}" />
+	<div role="tabpanel" class="tab-content p-6">
+		{{ form_row(form.urlRedirections) }}
+	</div>
 </div>
-<div class="{{ tab != 'settings' ? 'hidden' }}" id="settings">
-	{{ form_row(form.published) }}
-</div>
-<div class="{{ tab != 'url-redirections' ? 'hidden' }}" id="url-redirections">
-	{{ form_row(form.urlRedirections) }}
-</div>
+
 <div class="fixed bottom-10 end-10">
-	<button type="submit" class="btn btn-success">
-		<i class="ki-filled ki-check"></i>
+	<button type="submit" class="btn btn-success btn-soft hover:text-base-100" data-loading="addAttribute(disabled)">
+		<i class="i-tabler-check text-xl"></i>
 		{% trans %}Save{% endtrans %}
 	</button>
 </div>

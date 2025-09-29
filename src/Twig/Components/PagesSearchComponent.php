@@ -12,6 +12,7 @@
 namespace App\Twig\Components;
 
 use App\Entity\ContentType;
+use App\Entity\Category\Category;
 use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
 use Override;
@@ -21,13 +22,16 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent()]
+#[AsLiveComponent(template: '@base_theme/partials/_datatable.html.twig')]
 final class PagesSearchComponent extends DatatableComponent
 {
     #[LiveProp(writable: true, url: true)]
     public string $sort = 'p.createdAt';
     #[LiveProp(writable: true, url: true)]
     public string $direction = 'DESC';
+
+    #[LiveProp(writable: false)]
+    public ?string $rowTemplateFile = "admin/page/_row.html.twig";
 
     #[Override]
     public function getQueryBuilder(): QueryBuilder
@@ -50,13 +54,16 @@ final class PagesSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans("Id"),
                     'sortable' => true,
                 ],
+                'p.title' => [
+                    'label' => $this->translator->trans("Title"),
+                    'sortable' => true,
+                ],
                 'c.name' => [
                     'label' => $this->translator->trans("Content Type"),
                     'sortable' => true,
                 ],
-                'p.title' => [
-                    'label' => $this->translator->trans("Title"),
-                    'sortable' => true,
+                [
+                    'label' => $this->translator->trans('Category'),
                 ],
                 [
                     'label' => $this->translator->trans('Slug'),
@@ -91,6 +98,27 @@ final class PagesSearchComponent extends DatatableComponent
                 'p.title' => [
                     'options' => [
                         'label' => 'Title',
+                    ],
+                ],
+                'p.contentType' => [
+                    'type' => EntityType::class,
+                    'comparison' => '=',
+                    'options' => [
+                        'label' => 'Content Type',
+                        'class' => ContentType::class,
+                        'choice_label' => function (ContentType $contentType) {
+                            return $this->translator->trans($contentType->getName());
+                        },
+                        'placeholder' => 'Select content type',
+                    ],
+                ],
+                'p.category' => [
+                    'type' => EntityType::class,
+                    'comparison' => '=',
+                    'options' => [
+                        'label' => 'Category',
+                        'class' => Category::class,
+                        'choice_label' => 'name',
                     ],
                 ],
                 'p.published' => [

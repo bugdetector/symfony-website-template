@@ -1,8 +1,16 @@
 {% set flashes = app.flashes %}
 {% if app.request.hasPreviousSession and flashes %}
-	<div class="">
-		{% for type, messages in flashes %}
-			{% for key, message in messages %}
+	{% for type, messages in flashes %}
+		{% set isTypeLast = loop.last %}
+		{% for key, message in messages %}
+			{% set isMessageLast = loop.last %}
+			{% if isTypeLast and isMessageLast %}
+				{% if type == 'error' %}
+					<div {{ stimulus_controller('flashmessage') }} data-icon='{{ type }}' data-title="{{ type|trans }}" data-html='{{ message }}' data-show-confirm-button="true"></div>
+				{% else %}
+					<div {{ stimulus_controller('flashmessage') }} data-icon='{{ type }}' data-title="{{ type|trans }}" data-html='{{ message }}' data-toast="true" data-position="bottom-end" data-timer="2000"></div>
+				{% endif %}
+			{% else %}
 				{% if type == 'warning' %}
 					{% set iconClass = 'i-tabler-alert-triangle' %}
 					{% set colorClasses = "text-yellow-800 dark:text-yellow-400 bg-yellow-100 border-yellow-600" %}
@@ -21,11 +29,18 @@
 					{% set closeButtonClasses = "text-blue-500 hover:ring-blue-400" %}
 				{% endif %}
 				{% set id = type ~ "-" ~ key %}
-				<div class="alert alert-{{ type }}" role="alert" id="{{ id }}">
-					<b>{{ type|trans }}</b>
-					{{ message|trans }}
+				<div class="flex items-center p-4 mb-4 text-sm dark:bg-gray-800 border-t-4 mx-3 {{ colorClasses }}" role="alert" id="{{ id }}">
+					<span class="{{ iconClass }} text-2xl me-2"></span>
+					<span class="font-bold">{{ type|trans }}</span>
+					<div class="ms-2 text-sm font-medium">
+						{{ message|trans }}
+					</div>
+					<button type="button" class="ms-auto bg-transparent p-1.5 -mx-1.5 -my-1.5 h-8 w-8 hover:ring-2 rounded-lg {{ closeButtonClasses }}" data-dismiss-target="#{{ id }}">
+						<span class="i-tabler-x text-xl"></span>
+					</button>
 				</div>
-			{% endfor %}
+			{% endif %}
+
 		{% endfor %}
-	</div>
+	{% endfor %}
 {% endif %}

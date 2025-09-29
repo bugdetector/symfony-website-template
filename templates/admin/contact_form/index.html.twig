@@ -1,7 +1,5 @@
-{% extends '@base_theme/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="p-4">
-		{{ component('contact_form_search',{listTopic: 'contact_forms'}) }}
-	</div>
+    {{ component('ContactFormSearchComponent', {listTopic: 'contact_forms', loading: 'lazy', entityClass: 'App\\Entity\\ContactForm', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
 {% endblock %}

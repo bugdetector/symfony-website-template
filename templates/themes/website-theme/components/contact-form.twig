@@ -1,79 +1,38 @@
-<section id="contact-form" class="contact" {{ attributes }}>
-	<div class="container-lg">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="contact-head">
-					<h2 class="section-head">Order a free consultation</h2>
-					<p class="section-desc">We&rsquo;re excited to offer you a complimentary consultation to discuss
-																																																							                        your project needs.</p>
-				</div>
-				<div class="contact-step">
-					<div class="contact-step-head">What happens next?</div>
-					<ul class="contact-step-list">
-						<li>
-							<span class="contact-step-circle">01</span>
-							<span class="contact-step-text">An expert
-																																																																			                                contacts you after having analyzed your requirements;</span>
-						</li>
-						<li>
-							<span class="contact-step-circle">02</span>
-							<span class="contact-step-text">If needed, we
-																																																																			                                sign an NDA to ensure the highest privacy level;</span>
-						</li>
-						<li class="last">
-							<span class="contact-step-circle">03</span>
-							<span class="contact-step-text">We
-																																																																			                                submit a comprehensive project proposal with estimates, timelines, CVs, etc.</span>
-						</li>
-					</ul>
-				</div>
+<section id="contact-form" class="py-10 bg-base-100" {{ attributes }}>
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	<div class="max-w-3xl mx-auto bg-base-200 rounded-box shadow-lg p-8">
+		<h2 class="text-2xl font-bold mb-2">{% trans %}Contact us{% endtrans %}</h2>
+		<p class="mb-6 text-base-content/80">
+			{% trans %}Have a question? Fill out the form below and we’ll get back to you as soon as possible.{% endtrans %}
+		</p>
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		<div class="flex flex-col gap-4">
+			<label class="form-control w-full">
+				<span class="label-text mb-1">{{ field_label(form.email) }}*</span>
+				<input id="contact-email" name="{{ field_name(form.email) }}" value="{{ field_value(form.email) }}" class="input input-bordered w-full" type="email" placeholder="{{ field_label(form.email) }}">
+				<span class="text-error text-xs mt-1">{{ form_errors(form.email) }}</span>
+			</label>
+			<label class="form-control w-full">
+				<span class="label-text mb-1">{{ field_label(form.phone) }}*</span>
+				<input id="contact-phone" name="{{ field_name(form.phone) }}" value="{{ field_value(form.phone) }}" class="input input-bordered w-full" type="tel" placeholder="{{ field_label(form.phone) }}">
+				<span class="text-error text-xs mt-1">{{ form_errors(form.phone) }}</span>
+			</label>
+			<label class="form-control w-full">
+				<span class="label-text mb-1">{{ field_label(form.name) }}*</span>
+				<input id="contact-name" name="{{ field_name(form.name) }}" value="{{ field_value(form.name) }}" class="input input-bordered w-full" type="text" placeholder="{{ field_label(form.name) }}">
+				<span class="text-error text-xs mt-1">{{ form_errors(form.name) }}</span>
+			</label>
+			<label class="form-control w-full">
+				<span class="label-text mb-1">{{ field_label(form.message) }}*</span>
+				<textarea id="contact-message" name="{{ field_name(form.message) }}" class="textarea textarea-bordered w-full min-h-[120px]" placeholder="{{ field_label(form.message) }}">{{ field_value(form.message) }}</textarea>
+				<span class="text-error text-xs mt-1">{{ form_errors(form.message) }}</span>
+			</label>
+			<div class="text-xs text-base-content/60">
+				{% trans %}By submitting this form, I consent to the use of my personal data as described in the privacy policy.{% endtrans %}
 			</div>
-			<div class="col-md-8">
-				{{ form_start(form) }}
-				{{ form_errors(form) }}
-				<div class="contact-card">
-					<div class="row">
-						<div class="form-floating col-md-6">
-							<input id="contact-email" name="{{ field_name(form.email) }}" value='{{ field_value(form.email) }}' class="form-control" type="email" placeholder="{{ field_label(form.email) }}">
-							<label for="contact-email">{{ field_label(form.email) }}*</label>
-							<div class="form-error text-danger">
-								{{ form_errors(form.email) }}
-							</div>
-						</div>
-						<div class="form-floating col-md-6">
-							<input id="contact-phone" name="{{ field_name(form.phone) }}" value='{{ field_value(form.phone) }}' class="form-control" type="tel" placeholder="{{ field_label(form.phone) }}">
-							<label for="contact-phone">{{ field_label(form.phone) }}*</label>
-							<div class="form-error text-danger">
-								{{ form_errors(form.phone) }}
-							</div>
-						</div>
-						<div class="form-floating col-md-12 mt-3">
-							<input id="contact-name" name="{{ field_name(form.name) }}" value='{{ field_value(form.name) }}' class="form-control" type="text" placeholder="{{ field_label(form.name) }}">
-							<label for="contact-name">{{ field_label(form.name) }}*</label>
-							<div class="form-error text-danger">
-								{{ form_errors(form.name) }}
-							</div>
-						</div>
-						<div class="form-floating col-md-12 mt-3">
-							<textarea id="contact-message" name="{{ field_name(form.message) }}" class="form-control h-auto" type="text" placeholder="{{ field_label(form.message) }}" rows="5">{{ field_value(form.message) }}</textarea>
-							<label for="contact-message">{{ field_label(form.message) }}*</label>
-							<div class="form-error text-danger">
-								{{ form_errors(form.message) }}
-							</div>
-						</div>
-						<div class="form-info col-md-12 mt-3">Bu formu göndererek kişisel verilerimin gizlilik politikasında belirtildiği gibi kullanılmasına izin veriyorum.</div>
-					</div>
-					<div class="row">
-						<div class='col-12 mt-4'>
-							{{ include('@website-theme/partials/flash_messages.html.twig') }}
-						</div>
-						<div class="col-md-12 mt-4">
-							<button type='submit' class="form-send-btn">Mesajı Gönder</button>
-						</div>
-					</div>
-				</div>
-				{{ form_end(form) }}
-			</div>
+			<button type="submit" class="btn btn-primary w-full mt-2">{% trans %}Send Message{% endtrans %}</button>
 		</div>
+		{{ form_end(form) }}
 	</div>
 </section>

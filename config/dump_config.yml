@@ -1,0 +1,14 @@
+configuration:
+  entity: App\Entity\Configuration\Configuration
+  importFields:
+    - configKey
+    - value
+  filterFields:
+    - configKey
+contentType:
+  entity: App\Entity\ContentType
+  importFields:
+    - name
+    - slug
+  filterFields:
+    - name

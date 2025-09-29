@@ -5,31 +5,18 @@ namespace App\Entity\Trait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation\TreeLeft;
-use Gedmo\Mapping\Annotation\TreeLevel;
-use Gedmo\Mapping\Annotation\TreeParent;
-use Gedmo\Mapping\Annotation\TreeRight;
+use Gedmo\Mapping\Annotation\SortableGroup;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 trait TreeEntity
 {
-    #[TreeParent]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[SortableGroup]
     private ?self $parent = null;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist', 'remove'])]
     private Collection $children;
-
-    #[TreeLevel]
-    #[ORM\Column(nullable: true)]
-    private ?int $depth = null;
-
-    #[TreeLeft]
-    #[ORM\Column(nullable: true)]
-    private ?int $lft = null;
-
-    #[TreeRight]
-    #[ORM\Column(nullable: true)]
-    private ?int $rgt = null;
 
     public function __construct()
     {
@@ -41,10 +28,20 @@ trait TreeEntity
         return $this->parent;
     }
 
+    #[Assert\Callback]
+    public function validateChildNotEqualToParent(ExecutionContextInterface $context): void
+    {
+        if ($this->parent && $this->getId() == $this->parent->getId()) {
+            $context->buildViolation('An entity cannot be its own parent.')
+                ->setTranslationDomain('validators')
+                ->atPath('parent')
+                ->addViolation();
+        }
+    }
+
     public function setParent(?self $parent): static
     {
         $this->parent = $parent;
-
         return $this;
     }
 
@@ -74,42 +71,6 @@ trait TreeEntity
                 $child->setParent(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDepth(): ?int
-    {
-        return $this->depth;
-    }
-
-    public function setDepth(?int $depth): static
-    {
-        $this->depth = $depth;
-
-        return $this;
-    }
-
-    public function getLft(): ?int
-    {
-        return $this->lft;
-    }
-
-    public function setLft(?int $lft): static
-    {
-        $this->lft = $lft;
-
-        return $this;
-    }
-
-    public function getRgt(): ?int
-    {
-        return $this->rgt;
-    }
-
-    public function setRgt(?int $rgt): static
-    {
-        $this->rgt = $rgt;
 
         return $this;
     }

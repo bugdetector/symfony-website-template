@@ -12,10 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 
 trait LiveAsyncFileInputTrait
 {
+    use ComponentToolsTrait;
     use ComponentWithFormTrait;
 
     #[LiveAction]
@@ -34,7 +36,6 @@ trait LiveAsyncFileInputTrait
             $matches
         );
         $nameParts = $matches[0];
-        $nameParts = array_filter($nameParts, fn($part) => !is_numeric($part));
         $firstPart = array_shift($nameParts);
         $uploadedFiles = $request->files->get("live_file_input_" . $this->formName);
         foreach ($nameParts as $namePart) {
@@ -50,7 +51,7 @@ trait LiveAsyncFileInputTrait
                 $fileManager->saveUploadedFile(
                     $file,
                     $uploadedFile,
-                    nameParts: [$firstPart, ...$nameParts],
+                    nameParts: [$firstPart, ...array_filter($nameParts, fn($part) => !is_numeric($part))],
                 );
                 if (is_array($data)) {
                     $data[] = $file->getId();

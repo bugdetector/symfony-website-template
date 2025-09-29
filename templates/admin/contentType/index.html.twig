@@ -1,16 +1,23 @@
-{% extends '@base_theme/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block actions %}
-	<div class="container-fluid flex md:justify-end items-center my-3 gap-5">
-		<a href='{{ path('app_admin_contentType_new') }}' class="btn btn-primary btn-sm">
-			<span class="flex justify-center items-center">
-				<span class="ki-solid ki-plus-circle text-md me-2"></span>
-				{% trans %}Add New Content Type{% endtrans %}
-			</span>
-		</a>
+    <div data-controller="live">
+		<button type="button" class="btn btn-outline" data-controller="modal" data-modal-target-modal-value="content-type-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="null">
+			<i class="i-tabler-plus text-lg"></i>
+			{% trans %}Add New Content Type{% endtrans %}
+		</button>
 	</div>
 {% endblock %}
 
 {% block body %}
-	{{ component('ContentTypeSearchComponent', {listTopic: 'contentTypes'}) }}
+    {{ component('ContentTypeSearchComponent', {listTopic: 'contentTypes', loading: 'lazy', entityClass: 'App\\Entity\\ContentType', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
+
+	<dialog class="modal modal-bottom sm:modal-middle" id="content-type-modal-form">
+		<div class="modal-box">
+			<button type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 modal-close" data-action="live#emit" data-live-event-param="closeModal">
+				<i class="i-tabler-x"></i>
+			</button>
+			{{ component('LiveForms:LiveContentTypeFormComponent') }}
+		</div>
+	</dialog>
 {% endblock %}

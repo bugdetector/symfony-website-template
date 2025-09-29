@@ -1,24 +1,25 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace App\Twig\Components;
 
 use App\Entity\ContentType;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent()]
+#[AsLiveComponent(template: '@base_theme/partials/_datatable.html.twig')]
 final class ContentTypeSearchComponent extends DatatableComponent
 {
+    #[LiveProp(writable: true, url: true)]
+    public string $sort = 'ct.createdAt';
+    #[LiveProp(writable: true, url: true)]
+    public string $direction = 'DESC';
+
+    #[LiveProp(writable: false)]
+    public ?string $rowTemplateFile = "admin/contentType/_row.html.twig";
+
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {
@@ -57,12 +58,17 @@ final class ContentTypeSearchComponent extends DatatableComponent
                 "ct.name" => []
             ],
             "filters" => [
-                'ct.title' => [
+                'ct.name' => [
                     'options' => [
-                        'label' => 'Title',
-                    ]
+                        'label' => 'Name',
+                    ],
                 ],
             ]
         ];
+    }
+
+    #[LiveListener('contentTypeSaved')]
+    public function onContentTypeSaved()
+    {
     }
 }

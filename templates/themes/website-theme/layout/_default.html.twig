@@ -1,231 +1,48 @@
 {% extends theme.themeDirectory ~ '/layout/master.html.twig' %}
 
 {% block layout %}
-	<body class="body">
-		{{ component('website-navbar') }}
-		{% block main %}
-			<main>
-				<turbo-frame id="website-web-content" data-turbo-action="advance" target='_top'>
-					{% block body %}{% endblock %}
+	<body class="min-h-screen bg-base-100 text-base-content flex">
+		<!-- Main Content -->
+		<div
+			class="flex-1 flex flex-col">
+			<!-- Navbar -->
+			{% block header %}
+				{% include theme.themeDirectory ~ "/partials/_header.html.twig" %}
+			{% endblock %}
+			<!-- Page Content -->
+			<main class="flex-1 overflow-y-auto bg-base-100">
+				<turbo-frame id='base-content' data-turbo-action="advance">
+					{% block title %}
+						<div class="bg-base-100 border-b border-base-300 px-4 flex justify-between flex-wrap ">
+							<div class="flex gap-3 gap-x-2 items-center">
+								{% block backLink %}{% endblock %}
+								<h1 class="text-lg font-semibold p-4" id="page-title">{{ title ?? app_name }}</h1>
+							</div>
+							<div class="flex flex-wrap items-center gap-3 mb-3 md:mb-0 md:ml-auto">
+								{% block actions %}{% endblock %}
+							</div>
+						</div>
+					{% endblock %}
+					{% block turboTitle %}
+						{% set newTitle = title ?? app_name %}
+						 <script>
+							document.title = "{{ newTitle }}";
+						</script>
+					{% endblock %}
+					
+					{% block flashes %}
+						{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+					{% endblock %}
+					<div class="p-6 pt-0 max-w-screen">
+						{% block body %}
+							&nbsp;
+						{% endblock %}
+					</div>
 				</turbo-frame>
-				{{ component('website-contact-form') }}
 			</main>
-		{% endblock %}
-		{% block footer %}
-			<footer class="footer">
-				<div class="container-lg">
-					<div class="footer-header">
-						<div class="row">
-							<div class="col-md-4 order-2 order-lg-1 ">
-								<div class="footer-info-bg">
-									<div class="footer-info-head">
-										<svg xmlns="http://www.w3.org/2000/svg" width="20.694" height="20.708" viewbox="0 0 20.694 20.708">
-											<g id="maps-icon" transform="translate(0 0.016)">
-												<path id="Path_8252" data-name="Path 8252" d="M13.727,13.13l2.1-3.647a6.269,6.269,0,0,0,0-6.338,6.338,6.338,0,0,0-10.968,0,6.269,6.269,0,0,0,0,6.338l2.1,3.63c-3.5.431-6.95,1.543-6.95,3.7,0,2.664,5.363,3.88,10.347,3.88s10.347-1.216,10.347-3.88C20.694,14.656,17.245,13.544,13.727,13.13ZM6.355,4.025a4.6,4.6,0,1,1,7.976,4.6l-3.984,6.9L6.363,8.62a4.579,4.579,0,0,1-.009-4.6Zm3.992,14.943c-5.691,0-8.623-1.509-8.623-2.156,0-.457,1.854-1.681,6.191-2.052L9.08,16.769a1.466,1.466,0,0,0,2.535,0l1.164-2.009c4.337.371,6.191,1.621,6.191,2.052C18.97,17.458,16.038,18.967,10.347,18.967Z" fill="#fff"></path>
-												<circle id="Ellipse_159" data-name="Ellipse 159" cx="1.725" cy="1.725" r="1.725" transform="translate(8.623 4.309)" fill="#fff"></circle>
-											</g>
-										</svg>
-
-										Address</div>
-									<div class="footer-info-desc">13 Knightswick Rd, Canvey Island SS8 9PA,
-										<br>
-										United Kingdom</div>
-								</div>
-								<div class="footer-info-flex">
-									<a href="mailto:info@ai-websolutions.com" class="footer-info-bg">
-										<div class="footer-info-head">
-											<svg xmlns="http://www.w3.org/2000/svg" width="23.8" height="19.8" viewbox="0 0 23.8 19.8">
-												<g id="_38.mail" data-name="38.mail" transform="translate(-0.1 -2.1)">
-													<rect id="Rectangle_1457" data-name="Rectangle 1457" width="22" height="18" rx="3" transform="translate(1 3)" fill="none"></rect>
-													<rect id="Rectangle_1458" data-name="Rectangle 1458" width="22" height="18" rx="3" transform="translate(1 3)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></rect>
-													<path id="Path_8253" data-name="Path 8253" d="M2,4l10,9L22,4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
-													<line id="Line_380" data-name="Line 380" y1="4" x2="4" transform="translate(5 11)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></line>
-													<line id="Line_381" data-name="Line 381" x1="4" y1="4" transform="translate(15 11)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></line>
-												</g>
-											</svg>
-											Contact Us
-										</div>
-										<div class="footer-info-desc">info@ai-websolutions.com</div>
-									</a>
-									<div class="footer-info-line"></div>
-									<a href="tel:020 3875 8055" class="footer-info-bg">
-										<div class="footer-info-head">
-											<svg xmlns="http://www.w3.org/2000/svg" width="19.861" height="19.895" viewbox="0 0 19.861 19.895">
-												<path id="_13003354851543238910" data-name="13003354851543238910" d="M13.24,4.44a4.3,4.3,0,0,1,3.4,3.4M13.24,1a7.741,7.741,0,0,1,6.838,6.829m-.86,6.863v2.58a1.72,1.72,0,0,1-1.875,1.72,17.021,17.021,0,0,1-7.423-2.64,16.772,16.772,0,0,1-5.161-5.161,17.021,17.021,0,0,1-2.64-7.457A1.72,1.72,0,0,1,3.83,1.86h2.58a1.72,1.72,0,0,1,1.72,1.479,11.043,11.043,0,0,0,.6,2.417,1.72,1.72,0,0,1-.387,1.815L7.254,8.663a13.761,13.761,0,0,0,5.161,5.161l1.092-1.092a1.72,1.72,0,0,1,1.815-.387,11.043,11.043,0,0,0,2.417.6,1.72,1.72,0,0,1,1.479,1.746Z" transform="translate(-1.211 -0.006)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
-											</svg>
-											Phone Number
-										</div>
-										<div class="footer-info-desc">020 3875 8055</div>
-									</a>
-								</div>
-							</div>
-							<div class="col-md-8 order-1 order-lg-2">
-								<div class="footer-header-right-web">
-									<div class="footer-header-item">
-										<div class="footer-link-head">
-											Services
-										</div>
-										<div class="d-flex item-center gap-x-5 ">
-											<ul class="footer-link-list">
-												<li>
-													<a href="/crm">CRM Solutions</a>
-												</li>
-												<li>
-													<a href="/cms">CMS Solutions</a>
-												</li>
-												<li>
-													<a href="/erp">ERP Services</a>
-												</li>
-											</ul>
-											<ul class="footer-link-list">
-												<li>
-													<a href="/digital-marketing">Digital Marketing</a>
-												</li>
-												<li>
-													<a href="/pwa-progressive-web-app-development">PWA Development</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="footer-header-item">
-										<div class="footer-link-head">
-											QUICK MENU
-										</div>
-										<ul class="footer-link-list">
-											<li>
-												<a href="/about">About Us</a>
-											</li>
-											<li>
-												<a href="/Careers">Careers</a>
-											</li>
-											<li>
-												<a href="/technologies">Technologies</a>
-											</li>
-											<li>
-												<a href="/projects">Projects</a>
-											</li>
-											<li>
-												<a href="/blogs">Blogs</a>
-											</li>
-										</ul>
-									</div>
-									<div class="footer-header-item">
-										<div class="footer-link-head">
-											Legal
-										</div>
-										<ul class="footer-link-list">
-											<li>
-												<a href="/privacy-policy">Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="footer-header-right-mobile">
-									<div class="accordion accordion-flush footer-header-accordion" id="accordionFlushExample">
-										<div class="accordion-item">
-											<h2 class="accordion-header">
-												<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-													Services
-												</button>
-											</h2>
-											<div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-												<div class="accordion-body">
-													<ul class="footer-accordion-list">
-														<li>
-															<a href="/crm">CRM Solutions</a>
-														</li>
-														<li>
-															<a href="/cms">CMS Solutions</a>
-														</li>
-														<li>
-															<a href="/erp">ERP Services</a>
-														</li>
-														<li>
-															<a href="/digital-marketing">Digital Marketing</a>
-														</li>
-														<li>
-															<a href="/pwa-progressive-web-app-development">PWA (Progressive Web App) Development</a>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="accordion-item">
-											<h2 class="accordion-header">
-												<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-													Company
-												</button>
-											</h2>
-											<div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-												<div class="accordion-body">
-													<ul class="footer-accordion-list">
-														<li>
-															<a href="/about">About Us</a>
-														</li>
-														<li>
-															<a href="/blogs">Blog</a>
-														</li>
-														<li>
-															<a href="/case-studies">Case Studies</a>
-														</li>
-														<li>
-															<a href="#contact-form">Contact us</a>
-														</li>
-														<li>
-															<a href="/technologies">Technologies</a>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<a href="/technologies" class="footer-mobile-link">Technologies</a>
-										<a href="/case-studies" class="footer-mobile-link">Case studies</a>
-										<a href="/blogs" class="footer-mobile-link">Blogs</a>
-										<a href="/privacy-policy" class="footer-mobile-link">Privacy Policy</a>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-					<div class="footer-alt">
-						<hr class="footer-hr mb-4 mt-4">
-						<div class="row">
-							<div class="col-md-8">
-								<p class="footer-alt-legal-info">
-									©2024 Ai Web Solutions Limited is a company registered in England and Wales. Registered office: 13 Knightswick Rd, Canvey Island SS8 9PA, United Kingdom. Registration number 13112653. VAT Number: 392 0089 95. Data Protection Act 1998 Registration Number ZB191570
-								</p>
-							</div>
-							<div class="col-md-4">
-								<ul class="footer-social-list">
-									<li>
-										<a target="_blank" href="https://www.linkedin.com/in/erkan-senol-97a5b23a/">
-											<svg xmlns="http://www.w3.org/2000/svg" width="14.436" height="14.436" viewbox="0 0 14.436 14.436">
-												<path id="linkedin-_161_" data-name="linkedin-[#161]" d="M138.436,7333.436h-2.887v-5.053c0-1.386-.611-2.158-1.708-2.158-1.193,0-1.9.809-1.9,2.158v5.053h-2.887v-9.383h2.887v1.054a3.48,3.48,0,0,1,2.947-1.589c2.042,0,3.549,1.25,3.549,3.826v6.092Zm-12.674-10.885a1.775,1.775,0,1,1,1.762-1.775,1.768,1.768,0,0,1-1.762,1.775ZM124,7333.436h3.609v-9.383H124Z" transform="translate(-124 -7319)" fill="#202449" fill-rule="evenodd"></path>
-											</svg>
-										</a>
-									</li>
-									<li>
-										<a target="_blank" href="#">
-											<svg xmlns="http://www.w3.org/2000/svg" width="8.628" height="16.711" viewbox="0 0 8.628 16.711">
-												<path id="Facebook" d="M184.628,55.118v2.637l-1.565,0c-1.227,0-1.463.583-1.463,1.435v1.887h2.922l-.379,2.951H181.6v7.679h-3.048V64.032H176V61.081h2.552V58.9a3.558,3.558,0,0,1,3.8-3.9A20.646,20.646,0,0,1,184.628,55.118Z" transform="translate(-176 -55)" fill="#202449" fill-rule="evenodd"></path>
-											</svg>
-										</a>
-									</li>
-									<li>
-										<a target="_blank" href="#">
-											<svg xmlns="http://www.w3.org/2000/svg" width="19.171" height="13.579" viewbox="0 0 19.171 13.579">
-												<path id="Youtube" d="M171.606,519.294v-5.425l5.18,2.722Zm11.373-6.365a4.2,4.2,0,0,0-.762-1.916,2.728,2.728,0,0,0-1.921-.818c-2.683-.2-6.707-.2-6.707-.2h-.008s-4.024,0-6.707.2a2.729,2.729,0,0,0-1.921.818,4.194,4.194,0,0,0-.761,1.916,29.408,29.408,0,0,0-.192,3.125v1.465a29.394,29.394,0,0,0,.192,3.125,4.194,4.194,0,0,0,.761,1.916,3.236,3.236,0,0,0,2.114.825c1.534.148,6.518.194,6.518.194s4.028-.006,6.711-.2a2.733,2.733,0,0,0,1.921-.818,4.2,4.2,0,0,0,.762-1.916,29.4,29.4,0,0,0,.192-3.125v-1.465a29.41,29.41,0,0,0-.192-3.125Z" transform="translate(-164 -510)" fill="#202449" fill-rule="evenodd"></path>
-											</svg>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
-		{% endblock %}
+			{% block footer %}
+				{% include theme.themeDirectory ~ "/partials/_footer.html.twig" %}
+			{% endblock %}
+		</div>
 	</body>
-
 {% endblock %}

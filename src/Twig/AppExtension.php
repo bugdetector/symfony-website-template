@@ -11,6 +11,8 @@
 
 namespace App\Twig;
 
+use App\Repository\Menu\MenuRepository;
+use App\Repository\Views\NavbarRepository;
 use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -39,6 +41,7 @@ final class AppExtension extends AbstractExtension
     // See https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
     public function __construct(
         string $locales,
+        private MenuRepository $menuRepository,
     ) {
         $localeCodes = explode('|', $locales);
         sort($localeCodes);
@@ -50,6 +53,7 @@ final class AppExtension extends AbstractExtension
         return [
             new TwigFunction('locales', $this->getLocales(...)),
             new TwigFunction('upload_asset', $this->uploadAsset(...)),
+            new TwigFunction('menuItems', $this->menuItems(...)),
         ];
     }
 
@@ -75,7 +79,7 @@ final class AppExtension extends AbstractExtension
 
         $this->locales = [];
         foreach ($this->localeCodes as $localeCode) {
-            $this->locales[] = ['code' => $localeCode, 'name' => Locales::getName($localeCode, $localeCode)];
+            $this->locales[$localeCode] = ['code' => $localeCode, 'name' => Locales::getName($localeCode, $localeCode)];
         }
 
         return $this->locales;
@@ -104,5 +108,10 @@ final class AppExtension extends AbstractExtension
             }
         }
         return $bytes;
+    }
+
+    public function menuItems()
+    {
+        return $this->menuRepository->findBy(['parent' => null]);
     }
 }
