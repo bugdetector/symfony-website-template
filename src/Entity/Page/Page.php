@@ -44,7 +44,7 @@ class Page implements Translatable
     private ?string $body = null;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
-    #[Gedmo\Slug(fields:['title'])]
+    #[Gedmo\Slug(fields:['title'], updatable: false)]
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: File::class)]

@@ -21,6 +21,19 @@ class PageRepository extends ServiceEntityRepository
         parent::__construct($registry, Page::class);
     }
 
+    public function findByContentTypeSlugAndSlug(string $contentTypeSlug, string $slug): ?Page
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.contentType', 'ct')
+            ->andWhere('ct.slug = :contentTypeSlug')
+            ->andWhere('p.slug = :slug')
+            ->setParameter('contentTypeSlug', $contentTypeSlug)
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Page[] Returns an array of Page objects
 //     */

@@ -1,0 +1,6 @@
+presta_sitemap:
+    alternate:
+        enabled: true
+        default_locale: 'tr'
+        locales: '%app_locales%'
+        i18n: symfony

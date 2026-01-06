@@ -1,12 +1,3 @@
-homepage:
-    path: /
-    controller: App\Controller\PageController::home
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-    options:
-        sitemap: true
 controllers:
     resource:
         path: ../src/Controller/
@@ -17,4 +8,5 @@ controllers:
     defaults:
         _locale: '%locale%'
 presta_sitemap:
+    prefix: /{_locale}
     resource: "@PrestaSitemapBundle/config/routing.yml"
