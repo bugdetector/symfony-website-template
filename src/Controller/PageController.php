@@ -24,7 +24,7 @@ class PageController extends DefaultLayoutController
         if (!($page->isPublished())) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
-        if($request->query->get('_locale') || $request->attributes->get('_locale') != $this->translator->getLocale()) {
+        if ($request->query->get('_locale') || $request->attributes->get('_locale') != $this->translator->getLocale()) {
             return $this->redirectToRoute('homepage', [
                 '_locale' => $this->translator->getLocale(),
             ]);
@@ -47,7 +47,7 @@ class PageController extends DefaultLayoutController
         if ($page->getContentType()->getSlug() === 'static-page') {
             throw $this->createNotFoundException('Page not found');
         }
-        if($request->query->get('_locale')) {
+        if ($request->query->get('_locale')) {
             return $this->redirectToRoute('app_page_view', [
                 '_locale' => $request->query->get('_locale'),
                 'contentTypeSlug' => $page->getContentType()->getSlug(),
@@ -72,7 +72,7 @@ class PageController extends DefaultLayoutController
         if ($page->getContentType()->getSlug() !== 'static-page') {
             throw $this->createNotFoundException('Page not found');
         }
-        if($request->query->get('_locale')) {
+        if ($request->query->get('_locale')) {
             return $this->redirectToRoute('app_page_static_view', [
                 '_locale' => $request->query->get('_locale'),
                 'slug' => $page->getSlug(),
