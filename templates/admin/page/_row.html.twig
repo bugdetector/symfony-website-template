@@ -38,9 +38,11 @@
 	<td class="px-6 py-3">{{ object.title }}</td>
 	<td class="px-6 py-3">{{ object.contentType.name|trans }}</td>
 	<td class="px-6 py-3">
-		<span class="badge badge-primary">
-			{{ object.category ? object.category.name : '-' }}
-		</span>
+		{% if object.category %}
+			<span class="badge badge-primary">
+				{{ object.category.name }}
+			</span>
+		{% endif %}
 	</td>
 	<td class="px-6 py-3">{{ object.slug }}</td>
 	<td class="px-6 py-3">

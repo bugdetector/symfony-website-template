@@ -147,7 +147,8 @@ Image: Resim
 'Registration Date (To)': 'Üyelik Tarihi (Bitiş)'
 All: Tümü
 Clear: Temizle
-'Add New label': 'Yeni {label} ekle'
+'Add New {label}': 'Yeni {label} Ekle'
+Add: Ekle
 'Created At (From)': 'Oluşturulma Tarihi (Başlangıç)'
 'Created At (To)': 'Oluşturulma Tarihi (Bitiş)'
 Deleted: Silinmiş
@@ -198,4 +199,9 @@ Parent: Üst
 View: Görüntüle
 'Email Sent': 'E-posta gönderildi'
 'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'E-postanıza doğrulamanız için bir kod gönderdik. <br> Lütfen e-postanızı doğrulamak için kullanın.'
-'Code': 'Kod'
+Code: Kod
+file_path: 'Dosya Yolu'
+'A reset code has already been sent to your email. Please check your inbox or try again later.': 'Şifre sıfırlama kodu zaten e-postanıza gönderildi. Lütfen gelen kutunuzu kontrol edin veya daha sonra tekrar deneyin.'
+'An error occurred. Please try again.': 'Bir hata oluştu. Lütfen tekrar deneyin.'
+'User not found.': 'Kullanıcı bulunamadı.'
+Management: Yönetim

@@ -50,25 +50,8 @@ document.addEventListener('app-hide-modal', (e) => {
 window.initializeComponents = function () {
     window.initLightBox();
     window.initThemeSelector();
-    if (!window.sidebarInitialized) {
-        document.querySelectorAll('.sidebar-toggle').forEach(function (toggle) {
-            toggle.addEventListener('click', function () {
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar) {
-                    sidebar.classList.toggle('open');
-                }
-            });
-        });
-        document.querySelectorAll('.sidebar .menu li').forEach(function (toggle) {
-            toggle.addEventListener('click', function () {
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar) {
-                    sidebar.classList.remove('open');
-                }
-            });
-        });
-        window.sidebarInitialized = true;
-    }
+    window.initSidebarDrawerState();
+    window.initSidebarSubmenus();
 }
 
 window.addEventListener('popstate', function (event) {
@@ -89,7 +72,12 @@ window.initThemeSelector = function () {
     const themeKey = "theme";
 
     const activeTheme = localStorage.getItem(themeKey) || 'system';
-    document.documentElement.setAttribute("data-theme", activeTheme);
+    if (activeTheme === "system") {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+    } else {
+        document.documentElement.setAttribute("data-theme", activeTheme);
+    }
 
     const activeInput = document.querySelector(`input[name="theme"][value="${activeTheme}"]`);
     if (activeInput) activeInput.checked = true;
@@ -100,7 +88,7 @@ window.initThemeSelector = function () {
 
             if (newTheme === "system") {
                 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                document.documentElement.setAttribute("data-theme", prefersDark ? "dracula" : "light");
+                document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
             } else {
                 document.documentElement.setAttribute("data-theme", newTheme);
             }
@@ -108,4 +96,114 @@ window.initThemeSelector = function () {
             localStorage.setItem(themeKey, newTheme);
         });
     });
+}
+
+window.initSidebarDrawerState = function () {
+    const drawerToggle = document.getElementById('app-drawer');
+
+    if (!drawerToggle) {
+        return;
+    }
+
+    const desktopBreakpoint = window.matchMedia('(min-width: 1024px)');
+    const storageKey = 'base-sidebar-open';
+
+    const syncDrawerState = () => {
+        if (desktopBreakpoint.matches) {
+            const storedState = localStorage.getItem(storageKey);
+            drawerToggle.checked = storedState === null ? true : storedState === 'true';
+            return;
+        }
+
+        drawerToggle.checked = false;
+    };
+
+    syncDrawerState();
+
+    if (window.__sidebarDrawerStateInitialized) {
+        return;
+    }
+
+    drawerToggle.addEventListener('change', () => {
+        if (!desktopBreakpoint.matches) {
+            return;
+        }
+
+        localStorage.setItem(storageKey, String(drawerToggle.checked));
+    });
+
+    const handleBreakpointChange = () => {
+        syncDrawerState();
+    };
+
+    if (typeof desktopBreakpoint.addEventListener === 'function') {
+        desktopBreakpoint.addEventListener('change', handleBreakpointChange);
+    } else {
+        desktopBreakpoint.addListener(handleBreakpointChange);
+    }
+
+    window.__sidebarDrawerStateInitialized = true;
+}
+
+window.initSidebarSubmenus = function () {
+    if (window.__sidebarSubmenuListenersInitialized) {
+        return;
+    }
+
+    const mobileBreakpoint = window.matchMedia('(max-width: 1023px)');
+    const desktopBreakpoint = window.matchMedia('(min-width: 1024px)');
+
+    const closeOpenSidebarSubmenus = (eventTarget = null) => {
+        const drawerToggle = document.getElementById('app-drawer');
+        if (drawerToggle?.checked) {
+            return;
+        }
+        document.querySelectorAll('.sidebar-details[open]').forEach((details) => {
+            if (eventTarget && details.contains(eventTarget)) {
+                return;
+            }
+
+            details.open = false;
+        });
+    };
+
+    const closeMobileSidebarDrawer = () => {
+        if (!mobileBreakpoint.matches) {
+            return;
+        }
+
+        const drawerToggle = document.getElementById('app-drawer');
+        if (drawerToggle) {
+            drawerToggle.checked = false;
+        }
+    };
+
+    const shouldKeepSubmenuOpen = () => {
+        const drawerToggle = document.getElementById('app-drawer');
+        return drawerToggle?.checked;
+    };
+
+    document.addEventListener('click', (event) => {
+        const clickedSidebarLink = event.target.closest('.sidebar-submenu a, .sidebar-menu > li > a');
+
+        if (clickedSidebarLink) {
+            const parentDetails = clickedSidebarLink.closest('.sidebar-details');
+            if (parentDetails && !shouldKeepSubmenuOpen()) {
+                parentDetails.open = false;
+            }
+
+            closeMobileSidebarDrawer();
+        }
+
+        closeOpenSidebarSubmenus(event.target);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeOpenSidebarSubmenus();
+            closeMobileSidebarDrawer();
+        }
+    });
+
+    window.__sidebarSubmenuListenersInitialized = true;
 }

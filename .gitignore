@@ -32,4 +32,10 @@ yarn.lock
 /public/uploads
 .DS_Store
 .htpasswd
+bolt.db
 ###< Comfony ###
+
+###> AI Agent Skills ###
+/.agents/skills/*
+!/.agents/skills/comfony-crud/
+###< AI Agent Skills ###

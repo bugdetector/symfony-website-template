@@ -6,9 +6,7 @@
 			{% for localeObj in locales() %}
 				{% set is_active = (this.locale ?: this.defaultLocale) == localeObj.code %}
 				{% set is_rtl = localeObj.code in ['ar', 'fa', 'he'] %}
-				<a href="{{ path('app_admin_page_edit', { id: page.id, locale: localeObj.code }) }}" class="tab {{ is_active ? 'tab-active' : '' }}" value="{{ localeObj.code }}" aria-label="{{ localeObj.name|default(localeObj.code) }}">
-					{{ localeObj.name|default(localeObj.code) }}
-				</a>
+				<a href="{{ path('app_admin_page_edit', { 'id': page.id, 'locale': localeObj.code } ) }}" class="tab {{ is_active ? 'tab-active' : '' }}" aria-label="{{ localeObj.name|default(localeObj.code) }}">{{ localeObj.name|default(localeObj.code) }}</a>
 			{% endfor %}
 		</div>
 	{% endif %}
@@ -71,8 +69,9 @@
 </div>
 
 <div class="fixed bottom-10 end-10">
-	<button type="submit" class="btn btn-success btn-soft hover:text-base-100" data-loading="action(save)|addAttribute(disabled)">
-		<i class="i-tabler-check text-xl"></i>
+	<button type="submit" class="btn btn-success btn-soft hover:text-base-100 gap-2" data-loading="action(save)|addAttribute(disabled)">
+		<span data-loading="action(save)|removeClass(hidden)" class="loading loading-spinner loading-xs hidden"></span>
+		<i data-loading="action(save)|addClass(hidden)" class="i-tabler-check text-xl"></i>
 		{% trans %}Save{% endtrans %}
 	</button>
 </div>

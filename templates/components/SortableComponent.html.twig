@@ -23,7 +23,7 @@
 </div>
 
 {% macro objectCard(object, formComponent, objectName, isTreeEntity) %}
-	<li data-object-id="{{ object.id }}" class="flex flex-col gap-2 bg-base-100 border border-base-300 rounded-box p-3 my-2 sortable-item" draggale="true">
+	<li data-object-id="{{ object.id }}" class="flex flex-col gap-2 bg-base-100 border border-base-300 rounded-box p-3 my-2 sortable-item" draggable="true">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-3">
 				<span class="cursor-move text-2xl">
@@ -37,10 +37,12 @@
 						<i class="i-tabler-edit"></i>
 						<span>{% trans %}Edit{% endtrans %}</span>
 					</button>
-					<button type="button" class="btn btn-sm btn-primary" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="null" data-live-parent-id-param="{{ object.id }}">
-						<i class="i-tabler-plus"></i>
-						<span>{{ ("Add New " ~ objectName)|trans }}</span>
-					</button>
+					{% if isTreeEntity %}
+						<button type="button" class="btn btn-sm btn-primary" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="null" data-live-parent-id-param="{{ object.id }}">
+							<i class="i-tabler-plus"></i>
+							<span>{{ ("Add New " ~ objectName)|trans }}</span>
+						</button>
+					{% endif %}
 				{% endif %}
 				{% set modalId = 'delete-modal-' ~ object.id %}
 				<form data-action="live#action" data-live-action-param="removeItem" data-live-item-id-param="{{ object.id }}">

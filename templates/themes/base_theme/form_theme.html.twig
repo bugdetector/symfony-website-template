@@ -11,7 +11,7 @@
     {% elseif type is defined and type == "password" %}
         {%- set widget_class = widget_class|default('w-full') -%}
     {% else %}
-        {%- set widget_class = widget_class|default('input w-full') -%}
+        {%- set widget_class = widget_class|default('input w-full min-w-[80px]') -%}
     {% endif %}
     {%- set widget_disabled_class = widget_disabled_class|default('input-disabled') -%}
     {%- set widget_errors_class = widget_errors_class|default('text-error') -%}
@@ -31,8 +31,9 @@
 {%- endblock choice_widget_expanded -%}
 
 {%- block choice_widget_collapsed -%}
-    {%- set attr_class = attr.class|default('select w-full') -%}
-    {%- set attr = attr|merge({'class': (attr_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    {%- set base_class = uses_autocomplete|default(false) ? 'w-full' : 'select w-full' -%}
+    {%- set base_class = multiple|default(false) ? base_class ~ ' block' : base_class -%}
+    {%- set attr = attr|merge({'class': (base_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
     {{- parent() -}}
 {%- endblock choice_widget_collapsed -%}
 
@@ -83,6 +84,64 @@
     {%- set widget_class = widget_class|default('textarea w-full') -%}
     {{- parent() -}}
 {%- endblock textarea_widget -%}
+
+{%- block date_widget -%}
+    {%- if widget == 'single_text' -%}
+        {%- set type = type|default('text') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} 
+            {{ stimulus_controller('flatpickr', {
+                enableTime: false,
+                dateFormat: 'Y-m-d',
+                altFormat: 'd-m-Y',
+                altInput: true,
+                allowInput: true,
+                locale: app.request.locale
+            }) }}
+        />
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock date_widget -%}
+
+{%- block datetime_widget -%}
+    {%- if widget == 'single_text' -%}
+        {%- set type = type|default('text') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} 
+            {{ stimulus_controller('flatpickr', {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i',
+                altFormat: 'd-m-Y h:i',
+                altInput: true,
+                allowInput: true,
+                locale: app.request.locale
+            }) }}
+        />
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock datetime_widget -%}
+
+{%- block time_widget -%}
+    {%- if widget == 'single_text' -%}
+        {%- set type = type|default('text') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} 
+            {{ stimulus_controller('flatpickr', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'H:i',
+                altFormat: 'h:i',
+                altInput: true,
+                allowInput: true,
+                locale: app.request.locale
+            }) }}
+        />
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock time_widget -%}
 
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
@@ -155,7 +214,7 @@
 
 {%- block live_collection_widget -%}
     <div tabindex="0" class="collapse collapse-arrow bg-base-100 border-base-300 border">
-        <input type="checkbox" name="{{ cache_key }}" />
+        <input type="checkbox" name="{{ cache_key }}" checked/>
         <div class="collapse-title font-semibold">{{ block('form_label_content') }}</div>
         <div class="collapse-content text-sm" id="{{ id }}_wrapper_content">
             <div class="join join-vertical bg-base-100 w-full">
@@ -169,8 +228,8 @@
 {%- endblock -%}
 
 {%- block live_collection_entry_row -%}
-    <div class="collapse collapse-arrow join-item border-base-300 border">
-        <input type="checkbox" name="{{ cache_key }}"/>
+    <div class="collapse collapse-arrow join-item border-base-300 border my-2">
+        <input type="checkbox" name="{{ cache_key }}" checked/>
         <div class="collapse-title font-semibold">{{ (form.parent.vars.label ? form.parent.vars.label|trans ~ ' - ' : '') ~  (name + 1) }}</div>
         <div class="collapse-content" id="{{ id }}_content">
             {{ block('form_row') }}
@@ -197,7 +256,7 @@
                             <span>{{ form_label(prototypeChild) }}</span>
                         </th>
                     {% endfor %}
-                <tr>
+                </tr>
             </thead>
             <tbody>
                 {% for index, child in form %}
@@ -206,7 +265,12 @@
                         {% for innerChild in child %}
                             {% if not innerChild.rendered %}
                                 <td class="px-2 py-2 align-baseline">
-                                    {{ form_widget(innerChild) }}
+                                    {{ form_widget(innerChild, {
+                                            attr: {
+                                            "data-live-item-index-param": index
+                                            }
+                                        }) }}
+
                                     {{ form_errors(innerChild) }}
                                 </td>
                             {% endif %}
@@ -267,10 +331,10 @@
             data-form-collection-index-value="{{ value ? value.count() : 0 }}"
             data-form-collection-container-tag-value="tr"
             data-form-collection-prototype-value="{{ prototypeHtml }}">
-            <div class='card-body overflow-auto'>
+            <div class='card-body overflow-none'>
                 <table class="table table-border caption-top">
                     <caption class="text-start font-bold mb-3 sticky left-0 text-xl p-3">
-                        {{ form.vars.label }}
+                        {{ form.vars.label|trans }}
                     </caption>
                     <thead class="text-xs uppercase">
                         <tr>
@@ -279,7 +343,7 @@
                                     <span>{{ form_label(prototypeChild) }}</span>
                                 </th>
                             {% endfor %}
-                        <tr>
+                        </tr>
                     </thead>
                     <tbody {{ stimulus_target('form-collection', 'collectionContainer') }}>
                     {% for index, child in form %}
@@ -317,7 +381,7 @@
                         <i class='i-tabler-plus'></i>
                         <span>
                             {% if form.vars.label %}
-                                {% trans with {label: form.vars.label} %}Add New label{% endtrans %}
+                                {% trans with {label: form.vars.label|trans} %}Add New {label}{% endtrans %}
                             {% else %}
                                 {% trans %}Add{% endtrans %}
                             {% endif %}
@@ -331,8 +395,8 @@
 
 {%- block collection_widget -%}
     {% set prototypeHtml = "
-        <div class='collapse collapse-arrow join-item border-base-300 border'>
-            <input type='checkbox' name='__name__' />
+        <div class='collapse collapse-arrow join-item border-base-300 border collection-item'>
+            <input type='checkbox' name='__name__' checked />
             <div class='collapse-title font-semibold'>
                 " ~ (label|default('')|trans) ~ " - <span>__name_index__</span>
             </div>
@@ -358,15 +422,15 @@
         data-form-collection-container-tag-value="div"
         data-form-collection-prototype-value="{{ prototypeHtml }}">
         <div class="collapse collapse-arrow bg-base-100 border-base-300 border mb-3">
-            <input type="checkbox" name="{{ id }}_main" />
+            <input type="checkbox" name="{{ id }}_main" checked />
             <div class="collapse-title font-semibold">
                 {{ form.vars.label }}
             </div>
             <div class="collapse-content text-sm" id="{{ id }}_wrapper_content">
                 <div class="join join-vertical bg-base-100 w-full" {{ stimulus_target('form-collection', 'collectionContainer') }}>
                     {% for index, child in form %}
-                        <div class="collapse collapse-arrow join-item border-base-300 border mb-2" id="{{ child.vars.id }}">
-                            <input type="checkbox" name="{{ child.vars.id }}_toggle"/>
+                        <div class="collapse collapse-arrow join-item border-base-300 border mb-2 collection-item" id="{{ child.vars.id }}">
+                            <input type="checkbox" name="{{ child.vars.id }}_toggle" checked/>
                             <div class="collapse-title font-semibold">
                                 {{ (form.vars.label ? form.vars.label|trans ~ ' - ' : '') ~ (index + 1) }}
                             </div>
@@ -392,7 +456,7 @@
                             <i class='i-tabler-plus'></i>
                             <span>
                                 {% if form.vars.label %}
-                                    {% trans with {label: form.vars.label} %}Add New label{% endtrans %}
+                                    {% trans with {'{label}': form.vars.label|trans} %}Add New {label}{% endtrans %}
                                 {% else %}
                                     {% trans %}Add{% endtrans %}
                                 {% endif %}
@@ -410,7 +474,7 @@
         <span class="btn btn-success join-item pointer-events-none text-base-200">
             {{ money_pattern|form_encode_currency }}
         </span>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endblock %}
 
@@ -419,6 +483,6 @@
         <span class="btn btn-warning join-item pointer-events-none text-base-200">
             {{ symbol|default('%') }}
         </span>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endblock %}
